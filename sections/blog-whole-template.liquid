@@ -1,0 +1,147 @@
+{%- assign paginationAmount = 3 -%}
+{%- if cart.attributes.pagination != blank -%}
+    {%- assign paginationAmount = cart.attributes.pagination | default:3 | abs -%}
+
+{%- endif -%}
+
+{% paginate blog.articles by paginationAmount %}
+
+<section data-section-id="{{ section.id }}" class="section-blog-template">
+    <div class="row justify-content-center">
+        <div class="col-sm-9 grid-main">
+            <div class="page-title-wrapper">
+                <div class="container">
+                    <h1 class="page-title text-left">
+                        <span class="base" data-ui-id="page-title-wrapper">{{ page_title }}</span> </h1>
+                </div>
+            </div>
+            <div class="column main">
+                <div class="posts-list-wrapper">
+                    <div class="toolbar-top">
+                        <div class="toolbar toolbar-products toolbar-posts">
+                            <div class="field limiter" style="display: block">
+                                <label class="label" for="limiter">
+                                    <span>Show</span>
+                                </label>
+                                <div class="control">
+                                    <select id="limiter" data-role="limiter" class="limiter-options">
+                                        {%- assign paginationAmounts = '3,6,9' | split:',' -%}
+                                        {%- for i in paginationAmounts -%}
+                                            {% assign v = i | append:'' %}
+                                            <option value="{{ v }}"
+                                                {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == v %}
+                                                selected{% endif %}{% else %}{% if i == 3 %}
+                                                selected{% endif %}{% endif %}>{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <span class="limiter-text">per page</span>
+                            </div>
+                            {%- comment -%}
+                            <div class="toolbar-sorter field sorter">
+                                <label class="sorter-label label" for="sorter">Sort By</label>
+                                <div class="control">
+                                    <select name="blog_sorter" id="sorter" data-role="sorter" class="sorter-options">
+                                        <option value="title">
+                                            Title </option>
+                                        <option value="author">
+                                            Author </option>
+                                        <option value="creation_time" selected="selected">
+                                            Date </option>
+                                    </select>
+                                </div>
+                                <a title="Set Descending Direction" href="#" class="action sorter-action sort-asc"
+                                    data-role="direction-switcher" data-value="desc">
+                                    <span>Set Descending Direction</span>
+                                </a>
+                            </div>
+                            {%- endcomment -%}
+                        </div>
+                    </div>
+                    <div class="block-posts-list">
+                        <ol class="post-items">
+                            {% for article in blog.articles %}
+                                <li class="post-item" data-post-id="{{forloop.index}}">
+                                    <div class="item-wrapper">
+                                        <div class="post-title">
+                                            <h3>
+                                                <a href="{{ article.url }}">{{ article.title }}</a>
+                                            </h3>
+                                        </div>
+                                        <div class="post-image">
+                                            <a href="{{ article.url }}" class="d-block">
+                                                <img src="{{ article.image | img_url: 'master' }}" alt="{{ article.title }}"/>
+                                            </a>
+                                        </div>
+                                        <div class="post-short-content">
+                                            <a href="{{ article.url }}" class="post-link" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">{{ 'blogs.article.read_more' | t }}</a>
+                                        </div>
+                                        <div class="post-data">
+                                            {% if blog.comments_enabled? %}
+                                                <span class="post-comments">
+                                                    <a href="{{ article.url }}#comments">
+                                                        <span class="count">{{ article.comments_count }}</span>
+                                                    </a>
+                                                </span>
+                                            {% endif %}
+                                            {% if section.settings.blog_show_date %}
+                                                <span class="create-date material-icons-access_time">
+                                                    <time>{{ article.published_at | time_tag: format: 'date' }}</time>
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {%- else -%}
+                                <li class="no-blog">Sorry, there are no blogs</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    <div class="toolbar-bottom">
+                        <div class="toolbar toolbar-products toolbar-posts">
+                            <div class="pages">
+                                {%- if paginate.pages > 1 -%}
+                                    {% include 'pagination', paginate: paginate %}
+                                {%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {%- comment -%}
+        <div class="col-sm-3 grid-left">
+            <div class="sidebar sidebar-additional">
+                <div class="block block-wishlist">
+                    <div class="block-title">
+                        <strong role="heading" aria-level="2">My Wish List</strong>
+                    </div>
+                    <div class="block-content">
+                        <strong class="subtitle">Last Added Items</strong>
+                        <div class="empty">You have no items in your wish list.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%- endcomment -%}
+
+    </div>
+</section>
+
+{% endpaginate %}
+
+{% schema %}
+{
+    "name": "Blog pages",
+    "class": "template-blog",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "blog_show_date",
+            "label": "Show date",
+            "default": true
+        }
+    ]
+}
+{% endschema %}

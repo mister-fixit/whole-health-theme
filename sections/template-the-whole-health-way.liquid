@@ -1,0 +1,52 @@
+<div class="columns">
+    <div class="row">
+        <div class="col-12 grid-main order-md-2">
+                <div class="page-title-wrapper">
+                        <h1 class="page-title" id="page-title-heading">
+                            {%- if section.settings.page_title != blank -%}
+                                <span class="base">{{ section.settings.page_title }}</span>
+                            {%- else -%}
+                                <span class="base">{{ page.title }}</span>
+                            {%- endif -%}
+                        </h1>
+                </div>
+                <div class="category-view">
+                    <div class="category-cms rte">
+                        {{ page.content }}
+                    </div>
+                </div>
+        </div>
+        {%- comment -%}
+                <div class="col-sm-3 grid-left order-md-1">
+                    <div class="sidebar sidebar-additional">
+                        <div class="block block-wishlist">
+                            <div class="block-title">
+                                <strong role="heading" aria-level="2">My Wish List</strong>
+                            </div>
+                            <div class="block-content">
+                                <strong class="subtitle">Last Added Items</strong>
+                                <div class="empty">You have no items in your wish list.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {%- endcomment -%}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Shipping",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Page Title"
+        },
+        {
+            "type": "text",
+            "id": "page_title",
+            "label": "Page Title"
+        }
+    ]
+}
+{% endschema %}

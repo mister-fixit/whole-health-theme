@@ -1,0 +1,38 @@
+<div class="page-title-wrapper row">
+    <div class="col-md-8 col-md-preffix-2">
+        <h1 class="page-title text-left">
+            {%- if section.settings.page_title != blank -%}
+                <span class="base">{{ section.settings.page_title }}</span>
+            {%- else -%}
+                <span class="base">{{ page.title }}</span>
+            {%- endif -%}
+        </h1>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column main rte">
+        <div class="terms-conditions-page row">
+            <div class="col-md-8 col-md-preffix-2">
+                {{ page.content }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Terms and Condition",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Page Title"
+        },
+        {
+            "type": "text",
+            "id": "page_title",
+            "label": "Page Title"
+        }
+    ]
+}
+{% endschema %}

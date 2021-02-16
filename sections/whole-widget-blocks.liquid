@@ -1,0 +1,126 @@
+<section data-section-id="{{ section.id }}" class="index-blocks">
+    {% comment %} <div class="container"> {% endcomment %}
+        <div class="widget block block-static-block">
+            <div class="row border-item">
+                {%- for block in section.blocks -%}
+                {%- if block.type == 'image-content' -%}
+                <div class="col-sm-6">
+                    <div class="custom-item-3">
+                        <a href="{{block.settings.block_button_url}}" target="_self">
+                            <img src="{{ block.settings.block_image | img_url: 'original' }}" width="980"
+                                height="558" />
+                        </a>
+                        <div class="custom-item-content">
+                            {%- if block.settings.block_title -%}
+                            <div class="title-1">
+                                <a href="{{block.settings.block_button_url}}" target="_self"
+                                    style="{% if block.settings.title_color %}color: {{ block.settings.title_color}}; {% endif %}">{{block.settings.block_title}}</a>
+                            </div>
+                            {%- endif -%}
+                            {%- if block.settings.block_desc -%}
+                            <div class="desc-1">
+                                <a href="{{block.settings.block_button_url}}" target="_self"
+                                    style="{% if block.settings.desc_color %}color: {{ block.settings.desc_color}}; {% endif %}">{{block.settings.block_desc}}</a>
+                            </div>
+                            {%- endif -%}
+                            <a href="{{block.settings.block_button_url}}"
+                                class="{% if block.settings.show_button %}link-custom{% endif %}" target="_self"
+                                style="{% if block.settings.button_text_color %}color: {{ block.settings.button_text_color}}; {% endif %}
+                                {% if block.settings.button_bg_color %}background: {{ block.settings.button_bg_color}}; {% endif %}
+                                {% if block.settings.button_border_color %}border-color: {{ block.settings.button_border_color}}; {% endif %}">{{block.settings.block_button_text}}</a>
+                        </div>
+                    </div>
+                </div>
+                {%- endif -%}
+                {%- endfor -%}
+            </div>
+        </div>
+    {% comment %} </div> {% endcomment %}
+</section>
+
+{% schema %}
+{
+    "name": "Widget Blocks",
+    "class": "index-widget-blocks",
+    "blocks": [
+        {
+            "type": "image-content",
+            "name": "Widget Content",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "block_image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "block_title",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "block_desc",
+                    "label": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "block_button_text",
+                    "label": "Button Text",
+                    "default": "Shop Now"
+                },
+                {
+                    "type": "url",
+                    "id": "block_button_url",
+                    "label": "Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Colors"
+                },
+                {
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "Title Color"
+                },
+                {
+                    "type": "color",
+                    "id": "desc_color",
+                    "label": "Description Color"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_button",
+                    "label": "Show as a button?",
+                    "default": true
+                },
+                {
+                    "type": "color",
+                    "id": "button_text_color",
+                    "label": "Button Text Color"
+                },
+                {
+                    "type": "color",
+                    "id": "button_bg_color",
+                    "label": "Button Backgound Color"
+                },
+                {
+                    "type": "color",
+                    "id": "button_border_color",
+                    "label": "Button Border Color"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "category": "Image",
+            "name":"Index Widget Blocks",
+            "blocks": [
+                {
+                    "type": "image-content"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

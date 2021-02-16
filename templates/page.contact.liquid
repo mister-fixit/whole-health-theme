@@ -1,0 +1,82 @@
+<div class="page-title-wrapper">
+  <h1 class="page-title text-left">
+    <span class="base">Contact Us</span>
+  </h1>
+</div>
+
+<div class="columns contact-index-index">
+  <div class="column main">
+      <div class="row">
+          <div class="col-md-6">
+            {%- assign formId = 'contact-form' -%}
+            {% form 'contact', id: formId, class: 'form contact' %}
+              {% include 'form-status', form: form, form_id: formId %}
+
+              <fieldset class="fieldset">
+                <legend class="legend" <span class="contact-form_title">Write Us</span>
+                  <span class="note no-label">Jot us a note and we’ll get back to you as quickly
+                    as possible.</span>
+                </legend>
+                <div class="row">
+                  <div class="field name required col-sm-12">
+                    <label class="label" for="name"><span>{{ 'contact.form.name' | t }}</span></label>
+                    <div class="control">
+                      <input name="contact[{{ 'contact.form.name' | t }}]" id="name" title="Name"
+                        value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                        class="input-text" type="text"/>
+                    </div>
+                  </div>
+                  <div class="field email required col-sm-12">
+                    <label class="label" for="email"><span>{{ 'contact.form.email' | t }}</span></label>
+                    <div class="control">
+                      <input type="email" id="email" name="contact[email]" title="Email" autocorrect="off"
+                        autocapitalize="off"
+                        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                        aria-required="true" 
+                        class="input-text {% if form.errors contains 'email' %} input--error{% endif %}"
+                        {%- if form.errors contains 'email' -%}
+                          aria-invalid="true"
+                          aria-describedby="{{ formId }}-email-error"
+                        {%- endif -%}/>
+                    </div>
+                    {%- if form.errors contains 'email' -%}
+                      <span id="{{ formId}}-email-error" class="input-error-message">
+                        <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                        {% include 'icon-error' %}
+                        <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                      </span>
+                    {%- endif -%}
+                  </div>
+                  <div class="field telephone col-sm-12">
+                    <label class="label" for="telephone"><span>{{ 'contact.form.phone' | t }}</span></label>
+                    <div class="control">
+                      <input name="contact[{{ 'contact.form.phone' | t }}]" id="telephone" pattern="[0-9\-]*" title="Phone Number" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}" class="input-text"
+                        type="tel" />
+                    </div>
+                  </div>
+                </div>
+                <div class="field comment required">
+                  <label class="label" for="comment"><span>{{ 'contact.form.message' | t }}</span></label>
+                  <div class="control">
+                    <textarea name="contact[{{ 'contact.form.message' | t }}]" id="comment" title="What’s on your mind?" class="input-text" cols="5"
+                      rows="3">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div class="actions-toolbar">
+                <div class="primary">
+                  <input type="hidden" name="hideit" id="hideit" value="" />
+                  <button type="submit" title="Submit" class="action submit primary">
+                    <span>{{ 'contact.form.submit' | t }}</span>
+                  </button>
+                </div>
+              </div>
+            {% endform %}
+          </div>
+          <div class="col-md-6">
+              <div class="google-map-wrapper"></div>
+          </div>
+      </div>
+  </div>
+</div>

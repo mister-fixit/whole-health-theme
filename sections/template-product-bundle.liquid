@@ -1,0 +1,396 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{%- assign compare_at_price = current_variant.compare_at_price -%}
+{%- assign price = current_variant.price -%}
+
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+<div class="catalog-product-view page-product-bundle">
+    <div class="columns container layout_1">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="product-images-wrapper text-center">
+                    {% if featured_image != blank %}
+                        <div class="carousel carousel-main" role="tree"
+                            data-carousel-main
+                            data-flickity='{
+                            "adaptiveHeight": true,
+                            "contain": true,
+                            "wrapAround": false,
+                            "freeScroll": false,
+                            "accessibility": false,
+                            "setGallerySize": true,
+                            "prevNextButtons": true, 
+                            "pageDots": false,
+                            "lazyLoad": true,
+                            "fullscreen": true,
+                            "dragThreshold": 20,
+                            "arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 60, "y2": 45, "x3": 15}
+                            }'>
+                        {% for image in product.images %}
+                            <img class="carousel-cell img-fluid" role="treeitem"
+                            data-flickity-lazyload-src="{{ image.src | img_url: 'large' }}"
+                            data-flickity-lazyload-srcset="
+                                {{ image.src | img_url: 'large' }} 576w,
+                                {{ image.src | img_url: '1280x' }} 768w,
+                                {{ image.src | img_url: '1440x' }} 992w,
+                                {{ image.src | img_url: '1920x' }} 1200w
+                                "
+                            data-variant-title="{{ image.alt | escape }}"
+                            alt="{{ image.alt | escape }}"/>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="product-info-main">
+                    <div class="page-title-wrapper product">
+                        <h1 class="page-title">
+                            <span class="base">{{ product.title }}</span>
+                        </h1>
+                    </div>
+                    <div class="product-info-stock-sku">
+                        {%- if current_variant.available -%}
+                            <div class="stock available" title="Availability">
+                                <span>In stock</span>
+                            </div>                        
+                        {%- endif -%}
+                        {%- if current_variant.sku != blank -%}
+                        <div class="product attribute sku">
+                            <strong class="type">SKU</strong>
+                            <div class="value" itemprop="sku">{{ current_variant.sku }}</div>
+                        </div>    
+                        {%- endif -%}                        
+                    </div>
+                    <div class="product-reviews-summary empty">
+                        <div class="reviews-actions">
+                            <a class="action add"
+                                href="high-potency-detox-liver-support-resveratrol-60-capsules.html#review-form">
+                                Be the first to review this product </a>
+                        </div>
+                    </div>
+                    <div class="price-box price-final_price" data-role="priceBox" data-product-id="605"
+                        data-price-box="product-id-605">
+                        <span class="special-price">
+                            <span class="price-container price-final_price tax weee" itemprop="offers" itemscope
+                                itemtype="http://schema.org/Offer">
+                                <span data-price-amount="{{ price | money }}" data-price-type="finalPrice"
+                                    class="price-wrapper "><span class="price">{{ price | money }}</span></span>
+                                <meta itemprop="price" content="{{ price | money }}" />
+                                <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code | json }}" />
+                            </span>
+                        </span>
+                        {%- if compare_at_price > price -%}
+                            <span class="old-price">
+                                <span class="price-container price-final_price tax weee">
+                                    <span class="price-label">Retail Price:</span>
+                                    <span id="msrp-price-1584867917605" data-price-amount="{{ compare_at_price | money }}"
+                                        data-price-type="msrpPrice" class="prwishice-wrapper ">
+                                        <span class="price">{{ compare_at_price | money }}</span>
+                                    </span>
+                                </span>
+                            </span>
+                         {%- endif -%}
+                    </div>
+
+                    <div class="bundle-actions">
+                        <button id="bundle-slide" class="action primary customize" type="button">
+                            <span>Customize and Add to Cart</span>
+                        </button>
+                    </div>
+                    
+                    <div class="product-social-links">
+                        {%- if settings.enable_compare or settings.enable_wishlist -%}
+                            <div class="product-addto-links" data-role="add-to-links">
+                                {%- if settings.enable_wishlist -%}
+                                <a href="#" class="action towishlist wishlist-btn" data-product-handle="{{ product.handle }}" data-action="add-to-wishlist">
+                                    <span>Add to Wish List</span>
+                                </a>
+                                {%- endif -%}
+                                {%- if settings.enable_compare -%}
+                                <a href="#" data-product="{{ product.handle }}" data-role="add-to-links" class="action tocompare" data-compare>
+                                    <span>Add to Compare</span>
+                                </a>
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}
+                        <a href="mailto:service@wholehealth.com"
+                            class="action mailto friend">
+                            <span>Email</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="bundle-options-container">
+                    <div class="product-add-form">
+                        <form data-product-sku="HK1"
+                            action="https://www.wholehealth.com/checkout/cart/add/uenc/aHR0cHM6Ly93d3cud2hvbGVoZWFsdGguY29tL2hlYXJ0LWhlYWx0aC5odG1s/product/386/"
+                            method="post" id="product_addtocart_form">
+                            <input type="hidden" name="product" value="386" />
+                            <input type="hidden" name="selected_configurable_option" value="" />
+                            <input type="hidden" name="related_product" id="related-products-field" value="" />
+                            <input type="hidden" name="item" value="386" />
+                            <input name="form_key" type="hidden" value="ScuZloAfb5s8qb3I" />
+                            <div class="bundle-options-wrapper">
+                                <div class="product-options-wrapper" id="product-options-wrapper"
+                                    data-hasrequired="* Required Fields">
+                                    <div class="fieldset" tabindex="0">
+
+                                        <fieldset class="fieldset fieldset-bundle-options">
+                                            <legend id="customizeTitle" class="legend title">
+                                                <span>Customize Healthy Heart Support Pack</span>
+                                            </legend>
+                                            <button type="button" class="action back customization">
+                                                <span>Go back to product details</span>
+                                            </button>
+
+                                            <div class="fieldset-bundle-options__wrapper">
+
+                                                <div class="field option  required">
+                                                    <label class="label">
+                                                        <span>FA2</span>
+                                                    </label>
+                                                    <div class="control">
+                                                        <div class="nested options-list">
+                                                            <span class="product-name">Extra Strength Omega3 Fish
+                                                                Oil - High EPA/DHA (90 Softgels)</span> &nbsp; <span
+                                                                class="price-notice">+
+
+                                                                <span class="price-container tax weee">
+                                                                    <span data-price-amount="0" data-price-type=""
+                                                                        class="price-wrapper "><span
+                                                                            class="price">$0.00</span></span>
+                                                                </span>
+                                                            </span> <input type="hidden"
+                                                                class="bundle-option-175  product bundle option"
+                                                                name="bundle_option[175]" value="236" />
+                                                            <div class="field qty qty-holder">
+                                                                <label class="label" for="bundle-option-175-qty-input">
+                                                                    <span>Quantity</span>
+                                                                </label>
+                                                                <div class="control">
+                                                                    <input disabled="disabled"
+                                                                        id="bundle-option-175-qty-input"
+                                                                        class="input-text qty qty-disabled"
+                                                                        type="number" name="bundle_option_qty[175]"
+                                                                        value="1" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="field option  required">
+                                                    <label class="label">
+                                                        <span>VC5</span>
+                                                    </label>
+                                                    <div class="control">
+                                                        <div class="nested options-list">
+                                                            <span class="product-name">CoEnzyme Q10 150mg (60
+                                                                Vcaps)</span> &nbsp; <span class="price-notice">+
+
+                                                                <span class="price-container tax weee">
+                                                                    <span data-price-amount="0" data-price-type=""
+                                                                        class="price-wrapper "><span
+                                                                            class="price">$0.00</span></span>
+                                                                </span>
+                                                            </span> <input type="hidden"
+                                                                class="bundle-option-176  product bundle option"
+                                                                name="bundle_option[176]" value="237" />
+                                                            <div class="field qty qty-holder">
+                                                                <label class="label" for="bundle-option-176-qty-input">
+                                                                    <span>Quantity</span>
+                                                                </label>
+                                                                <div class="control">
+                                                                    <input disabled="disabled"
+                                                                        id="bundle-option-176-qty-input"
+                                                                        class="input-text qty qty-disabled"
+                                                                        type="number" name="bundle_option_qty[176]"
+                                                                        value="1" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="field option  required">
+                                                    <label class="label">
+                                                        <span>RS1</span>
+                                                    </label>
+                                                    <div class="control">
+                                                        <div class="nested options-list">
+                                                            <span class="product-name">Extra Strength
+                                                                Trans-Resveratrol 325mg (30 Capsules)</span> &nbsp;
+                                                            <span class="price-notice">+
+
+                                                                <span class="price-container tax weee">
+                                                                    <span data-price-amount="0" data-price-type=""
+                                                                        class="price-wrapper "><span
+                                                                            class="price">$0.00</span></span>
+                                                                </span>
+                                                            </span> <input type="hidden"
+                                                                class="bundle-option-59  product bundle option"
+                                                                name="bundle_option[59]" value="88" />
+                                                            <div class="field qty qty-holder">
+                                                                <label class="label" for="bundle-option-59-qty-input">
+                                                                    <span>Quantity</span>
+                                                                </label>
+                                                                <div class="control">
+                                                                    <input disabled="disabled"
+                                                                        id="bundle-option-59-qty-input"
+                                                                        class="input-text qty qty-disabled"
+                                                                        type="number" name="bundle_option_qty[59]"
+                                                                        value="1" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+
+                                        <p class="required">* Required Fields</p>
+                                        <input type="hidden" name="productviewpage" value="yes" />
+                                        <input type="hidden"
+                                            value="{&quot;product_type&quot;:&quot;bundle&quot;,&quot;subscription&quot;:&quot;1&quot;,&quot;subscription_type&quot;:&quot;either&quot;,&quot;discount&quot;:0,&quot;discount_type&quot;:&quot;percentage&quot;}"
+                                            id="md_subscription_discount_config" disabled="" class="hidden disable" />
+
+                                        <div class="field choice">
+                                            <input type="radio" value="nosubscription" id="no_subscription"
+                                                class="radio admin__control-radio required product-custom-option"
+                                                name="options[_1]" checked=checked>
+                                            <label class="label" for="no_subscription"><span>One Time
+                                                    Only</span></label>
+                                        </div>
+                                        <div class="field choice">
+                                            <input type="radio" value="subscription" id="subscribe_this_product"
+                                                class="radio admin__control-radio required product-custom-option"
+                                                name="options[_1]">
+                                            <label class="label" for="subscribe_this_product"><span>Subscribe this
+                                                    product</span></label>
+                                        </div>
+                                        <div id="md_subscription_content" style="display: none;">
+                                            <div class="product-options-wrapper">
+                                                <div>
+                                                    <div id="product-subscription-customer"
+                                                        class="product-subscription-customer product-options-wrapper">
+                                                        <div class="fieldset">
+                                                            <div class="field required">
+                                                                <label for="billing_period"
+                                                                    class="label"><span>Subscription</span></label>
+                                                                <div class="control">
+                                                                    <select title="Subscription"
+                                                                        class=" required  admin__control-select product-custom-option"
+                                                                        id="billing_period" name="billing_period">
+                                                                        <option value="_1524557158629_629">30 Days
+                                                                        </option>
+                                                                        <option value="_1524557164318_318">45 Days
+                                                                        </option>
+                                                                        <option value="_1524557167549_549">60 Days
+                                                                        </option>
+                                                                        <option value="_1524557169629_629">90 Days
+                                                                        </option>
+                                                                        <option value="_1524557171712_712">120 Days
+                                                                        </option>
+                                                                        <option value="_1524680521859_859">One Day
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <h4 class="subscription-details-title">Subscription Details</h4>
+                                                    <label for="subscription_start" class="label">
+                                                        Subscription Start Date : </label>
+
+                                                    <span>2020-03-22</span>
+                                                    <input type="hidden" name="subscription_start_date"
+                                                        value="2020-03-22" />
+                                                    <table id="plan-attribute-specs-table"
+                                                        class="plan-attribute-specs-table data table table-order-items recent">
+                                                        <tbody>
+                                                            <tr class="first odd">
+                                                                <td class="label">Billing Max Cycle </td>
+                                                                <td class="data last">Repeats until failed or
+                                                                    canceled</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="bundleSummary" class="block-bundle-summary">
+                                <div class="title">
+                                    <strong>Your Customization</strong>
+                                </div>
+                                <div class="content">
+                                    <div class="bundle-info">
+
+                                        <span class="product-image-container" style="width:140px;">
+                                            <span class="product-image-wrapper" style="padding-bottom: 100%;">
+                                                <img class="product-image-photo"
+                                                    src="media/catalog/product/cache/12479842094003d6e8198e99b15d1aad/h/e/healthy_heart_bundle_1.png"
+                                                    width="140" height="140" alt="Healthy Heart Support Pack" />
+                                            </span>
+                                        </span>
+                                        <div class="product-details">
+                                            <strong class="product name">Healthy Heart Support Pack</strong>
+                                            <p class="available stock" title="Availability">
+                                                <span>In stock</span>
+                                            </p>
+                                            <div class="price-box price-configured_price" data-role="priceBox"
+                                                data-product-id="386" data-price-box="product-id-386">
+                                                <p class="price-as-configured">
+                                                    <span class="price-container price-configured_price tax weee"
+                                                        itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                                        <span id="product-price-386" data-price-amount="69.7"
+                                                            data-price-type="finalPrice" class="price-wrapper "><span
+                                                                class="price">$69.70</span></span>
+                                                        <meta itemprop="price" content="69.7" />
+                                                        <meta itemprop="priceCurrency" content="USD" />
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="box-tocart">
+                                                <div class="fieldset">
+                                                    <div class="field qty">
+                                                        <label class="label" for="qty"><span>Qty</span></label>
+                                                        <div class="control">
+                                                            <input type="number" name="qty" id="qty" value="1"
+                                                                title="Qty" class="input-text qty"
+                                                                data-validate="{&quot;required-number&quot;:true,&quot;validate-item-quantity&quot;:{&quot;minAllowed&quot;:1,&quot;maxAllowed&quot;:10000}}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="submit" title="Add to Cart"
+                                                            class="action primary tocart" id="product-addtocart-button">
+                                                            <span>Add to Cart</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bundle-summary">
+                                        <strong class="subtitle">Summary</strong>
+                                        <div id="bundle-summary" data-container="product-summary">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

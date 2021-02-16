@@ -1,0 +1,57 @@
+{% comment %}
+    Renders a pagination bar
+
+    Accepts:
+    - paginate: {Object} Paginate Liquid object (required)
+
+    Usage:
+    {% include 'pagination', paginate: paginate %}
+{% endcomment %}
+
+
+<ul class="items pages-items" aria-labelledby="paging-label">
+
+  {% if paginate.previous %}
+    <li class="item pages-item-previous">
+      <a class="action  previous" href="{{ paginate.previous.url }}" name="{{ paginate.next.title }}" title="{{ paginate.next.title }}" aria-label="{{ paginate.next.title }}">
+        <span class="label">{{ 'general.pagination.previous' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+
+  {% for part in paginate.parts %}
+    {% if part.is_link %}
+      <li class="item">
+        <a href="{{ part.url }}" class="page" name="{{ part.title }}" title="{{ part.title }}" aria-label="{{ part.title }}">
+          <span class="label"></span>
+          <span>{{ part.title }}</span>
+        </a>
+      </li>
+    {% else %}
+      {% if part.title == paginate.current_page %}
+        <li class="item current">
+          <strong class="page">
+            <span class="label"></span>
+            <span>{{ part.title }}</span>
+          </strong>
+        </li>
+      {% else %}
+        <li class="item">
+          <strong class="page">
+            <span class="label"></span>
+            <span>{{ part.title }}</span>
+          </strong>
+        </li>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if paginate.next %}
+    <li class="item pages-item-next">
+      <a class="action  next" href="{{ paginate.next.url }}" name="{{ paginate.next.title }}" title="{{ paginate.next.title }}" aria-label="{{ paginate.next.title }}">
+        <span class="label">{{ 'general.pagination.next' | t }}</span>
+      </a>
+    </li>
+  {% endif %}
+
+</ul>

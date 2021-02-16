@@ -1,0 +1,70 @@
+<li class="item product product-item">
+    <div class="product-item-info " data-container="product-grid" itemscope itemtype="//schema.org/product">
+
+        {%- assign preview_image = product.featured_media.preview_image -%}
+        {%- assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+        {% unless preview_image == blank %}
+            {% include 'image-style', image: preview_image, height: max_height, wrapper_id: wrapper_id, img_id: img_id %}
+        {% endunless %}
+        
+        <a href="{{ product.url | within: collection }}" class="product photo product-item-photo" tabindex="-1">
+            <span class="product-image-container" style="width:470px;">
+                {% if preview_image != blank %}
+                    <span class="product-image-wrapper"
+                        style="padding-bottom:{% unless preview_image == blank %}{{ 1 | divided_by: preview_image.aspect_ratio | times: 100 }}%{% else %}100%{% endunless %};">
+                        <img class="grid-view-item__image lazyload product-image-photo" alt="{{ preview_image.alt }}"
+                            data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                            data-aspectratio="{{ preview_image.aspect_ratio }}" data-sizes="auto" data-image>
+                    </span>
+                {% else %}
+                    <span class="product-image-wrapper"
+                        style="padding-bottom:{% unless preview_image == blank %}{{ 1 | divided_by: preview_image.aspect_ratio | times: 100 }}%{% else %}100%{% endunless %};">
+                        <img class="grid-view-item__image lazyload product-image-photo" alt="{{ preview_image.alt }}"
+                            src="https://cdn.shopify.com/s/files/1/0371/8086/6605/files/tr-logo.png?v=1585496244"
+                            data-aspectratio="{{ preview_image.aspect_ratio }}" data-sizes="auto" data-image>
+                    </span>
+                {% endif %}
+            </span>
+        </a>
+
+        <div class="product details product-item-details">
+            <span class="subscription_product_text">
+                <a href="{{ product.url | within: collection }}">Subscription Available</a>
+            </span>
+            <div class="price-box price-final_price" data-role="priceBox">
+                <span class="price-container price-final_price tax weee">
+                    <span data-price-amount="{{product.price_min | money_without_currency}}" data-price-type="finalPrice" class="price-wrapper">
+                        <span class="price">{{product.price_min | money}}</span>
+                    </span>
+                </span>
+            </div>
+
+            <strong class="product name product-item-name" itemprop="name">
+                <a class="product-item-link" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+            </strong>
+            <div class="product description product-item-description" itemprop="description">
+                <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="action more">Learn
+                    More</a>
+            </div>
+            <div class="product-item-inner">
+                <div class="product actions product-item-actions">
+                    {%- if settings.enable_compare or settings.enable_wishlist -%}
+                        <div class="actions-secondary" data-role="add-to-links">
+                            {%- if settings.enable_wishlist -%}
+                            <a href="#" class="action towishlist wishlist-btn" data-product-handle="{{ product.handle }}" data-action="add-to-wishlist">
+                                <span>Add to Wish List</span>
+                            </a>
+                            {%- endif -%}
+                            {%- if settings.enable_compare -%}
+                            <a href="#" data-product="{{ product.handle }}" data-role="add-to-links" class="action tocompare" data-compare>
+                                <span>Add to Compare</span>
+                            </a>
+                            {%- endif -%}
+                        </div>
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

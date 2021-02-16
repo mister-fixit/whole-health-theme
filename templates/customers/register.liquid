@@ -1,0 +1,171 @@
+{% comment %} <div class="page-width">
+  <div class="grid">
+    <div class="grid__item medium-up--one-half medium-up--push-one-quarter">
+
+      <div class="form-vertical">
+
+        <h1 class="text-center">{{ 'customer.register.title' | t }}</h1>
+
+        {%- assign formId = 'RegisterForm' -%}
+        {% form 'create_customer', id: formId, novalidate: 'novalidate' %}
+          {% include 'form-status', form: form, form_id: formId %}
+
+          <label for="{{ formId }}-FirstName">{{ 'customer.register.first_name' | t }}</label>
+          <input type="text" name="customer[first_name]" id="{{ formId }}-FirstName" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocomplete="given-name">
+
+          <label for="{{ formId }}-LastName">{{ 'customer.register.last_name' | t }}</label>
+          <input type="text" name="customer[last_name]" id="{{ formId }}-LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocomplete="family-name">
+
+          <label for="{{ formId }}-email">{{ 'customer.register.email' | t }}</label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="{{ formId }}-email"
+            class="{% if form.errors contains 'email' %} input--error{% endif %}"
+            {% if form.email %} value="{{ form.email }}"{% endif %}
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            aria-required="true"
+            {%- if form.errors contains 'email' -%}
+              class="input--error"
+              aria-invalid="true"
+              aria-describedby="{{ formId }}-email-error"
+            {%- endif -%}
+          >
+          {%- if form.errors contains 'email' -%}
+            <span id="{{ formId }}-email-error" class="input-error-message">
+              <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+              {% include 'icon-error' %}
+              <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+            </span>
+          {%- endif -%}
+
+          <label for="{{ formId }}-password">{{ 'customer.register.password' | t }}</label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="{{ formId }}-password"
+            class="{% if form.errors contains 'password' %} input--error{% endif %}"
+            aria-required="true"
+            {%- if form.errors contains 'password' -%}
+              class="input--error"
+              aria-invalid="true"
+              aria-describedby="{{ formId }}-password-error"
+            {%- endif -%}
+          >
+          {%- if form.errors contains 'password' -%}
+            <span id="{{ formId}}-password-error" class="input-error-message">
+              {% include 'icon-error' %}
+              <span>{{ form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] }}.</span>
+            </span>
+          {%- endif -%}
+
+          <p class="text-center">
+            <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn">
+          </p>
+
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div> {% endcomment %}
+
+
+
+<div class="page-title-wrapper">
+  <div class="container">
+    <h1 class="page-title">
+      <span class="base">{{ 'customer.register.title' | t }}</span> </h1>
+  </div>
+</div>
+
+<div class="columns container">
+  <div class="column main">
+  
+    {%- assign formId = 'RegisterForm' -%}
+    {% form 'create_customer', id: formId, class: 'form create account form-create-account', novalidate: 'novalidate' %}
+      {% include 'form-status', form: form, form_id: formId %}
+
+      <div class="col-md-8 col-md-preffix-2">
+      
+        <fieldset class="fieldset create info">
+
+          <legend class="legend"><span>Personal Information</span></legend><br>
+          <input type="hidden" name="success_url" value="">
+          <input type="hidden" name="error_url" value="">
+
+
+          <div class="field field-name-firstname required">
+            <label class="label" for="{{ formId }}-FirstName"><span>{{ 'customer.register.first_name' | t }}</span></label>
+            <div class="control">
+              <input type="text" name="customer[first_name]" data-customer-firstname id="{{ formId }}-FirstName" class="input-text customer_register_input required-entry" title="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocomplete="given-name">
+              <div for="{{ formId }}-FirstName" generated="true" class="mage-error d-none" id="firstname-error">This is a required field.</div>
+            </div>
+          </div>
+
+          <div class="field field-name-lastname required">
+            <label class="label" for="{{ formId }}-LastName"><span>{{ 'customer.register.last_name' | t }}</span></label>
+            <div class="control">
+              <input type="text" name="customer[last_name]" data-customer-lastname id="{{ formId }}-LastName" class="input-text customer_register_input required-entry" title="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocomplete="family-name">
+              <div for="{{ formId }}-LastName" generated="true" class="mage-error d-none" id="lastname-error">This is a required field.</div>
+            </div>
+          </div>
+
+          <div class="field choice newsletter">
+            <input type="hidden" name="customer[accepts_marketing]" value="" />
+            <input type="checkbox" name="customer[accepts_marketing]" aria-label="newsletter subscription" title="Sign Up for Newsletter" id="is_subscribed" class="checkbox">
+            <label for="is_subscribed" class="label"><span>Sign Up for Newsletter</span></label>
+          </div>
+
+        </fieldset>
+
+
+        <fieldset class="fieldset create account">
+          <legend class="legend"><span>Sign-in Information</span></legend><br>
+
+          <div class="field required">
+            <label for="{{ formId }}-email" class="label"><span>{{ 'customer.register.email' | t }}</span></label>
+            <div class="control">
+              <input type="email" name="customer[email]" data-customer-email id="{{ formId }}-email" class="input-text customer_register_input {% if form.errors contains 'email' %} input--error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} 
+                autocorrect="off" autocapitalize="off" autocomplete="email" aria-required="true" title="Email" {%- if form.errors contains 'email' -%} class="input--error" aria-invalid="true" aria-describedby="{{ formId }}-email-error" {%- endif -%}
+              >
+              <div for="{{ formId }}-email" generated="true" class="mage-error d-none" id="email_address-error">This is a required field.</div>
+            </div>
+          </div>
+
+
+          <div class="field password required">
+            <label for="{{ formId }}-password" class="label"><span>Password</span></label>
+            <div class="control">
+              <input type="password" name="customer[password]" data-customer-password id="{{ formId }}-password" title="Password" class="input-text customer_register_input {% if form.errors contains 'password' %} input--error{% endif %}"
+                aria-required="true" autocomplete="off" {%- if form.errors contains 'password' -%} class="input--error" aria-invalid="true" aria-describedby="{{ formId }}-password-error" {%- endif -%}
+              >
+              <div for="{{ formId }}-password" generated="true" class="mage-error d-none" id="password-error">This is a required field.</div>
+            </div>
+          </div>
+
+          <div class="field confirmation required">
+            <label for="{{ formId }}-confirmPassword" class="label"><span>Confirm Password</span></label>
+            <div class="control">
+              <input type="password" data-customer-confirmPassword title="Confirm Password" id="{{ formId }}-confirmPassword" class="input-text customer_register_input" autocomplete="off">
+              <div for="{{ formId }}-confirmPassword" generated="true" class="mage-error d-none" id="password-confirmation-error">This is a required field.</div>
+            </div>
+          </div>
+
+        </fieldset>
+
+        <div class="actions-toolbar">
+          <div class="primary">
+            <button type="submit" class="action submit primary" title="Create an Account" data-customer-register><span>{{ 'customer.register.submit' | t }}</span></button>
+          </div>
+          <div class="secondary">
+            <a class="action back" href="/account/login"><span>Back</span></a>
+          </div>
+        </div>
+      </div>
+
+    {% endform %}
+
+  </div>
+</div>

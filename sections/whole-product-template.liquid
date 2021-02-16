@@ -1,0 +1,440 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{%- assign compare_at_price = current_variant.compare_at_price -%}
+{%- assign price = current_variant.price -%}
+
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+<div class="catalog-product-view">
+    <div class="columns container layout_1">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="product-images-wrapper text-center">
+                    {% if featured_image != blank %}
+                        <div class="carousel carousel-main" role="tree"
+                            data-carousel-main
+                            data-flickity='{
+                            "adaptiveHeight": true,
+                            "contain": true,
+                            "wrapAround": false,
+                            "freeScroll": false,
+                            "accessibility": false,
+                            "setGallerySize": true,
+                            "prevNextButtons": true, 
+                            "pageDots": false,
+                            "lazyLoad": true,
+                            "fullscreen": true,
+                            "dragThreshold": 20,
+                            "arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 60, "y2": 45, "x3": 15}
+                            }'>
+                        {% for image in product.images %}
+                            <img class="carousel-cell img-fluid" role="treeitem"
+                            data-flickity-lazyload-src="{{ image.src | img_url: 'large' }}"
+                            data-flickity-lazyload-srcset="
+                                {{ image.src | img_url: 'large' }} 576w,
+                                {{ image.src | img_url: '1280x' }} 768w,
+                                {{ image.src | img_url: '1440x' }} 992w,
+                                {{ image.src | img_url: '1920x' }} 1200w
+                                "
+                            data-variant-title="{{ image.alt | escape }}"
+                            alt="{{ image.alt | escape }}"/>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="product-info-main">
+                    <div class="page-title-wrapper product">
+                        <h1 class="page-title">
+                            <span class="base">{{ product.title }}</span>
+                        </h1>
+                    </div>
+                    <div class="product-info-stock-sku">
+                        {%- if current_variant.available -%}
+                            <div class="stock available" title="Availability">
+                                <span>In stock</span>
+                            </div>                        
+                        {%- endif -%}
+                        {%- if current_variant.sku != blank -%}
+                        <div class="product attribute sku">
+                            <strong class="type">SKU</strong>
+                            <div class="value" itemprop="sku">{{ current_variant.sku }}</div>
+                        </div>    
+                        {%- endif -%}                        
+                    </div>
+                    <div class="product-reviews-summary empty">
+                        <div class="reviews-actions">
+                            <a class="action add"
+                                href="high-potency-detox-liver-support-resveratrol-60-capsules.html#review-form">
+                                Be the first to review this product </a>
+                        </div>
+                    </div>
+                    <div class="price-box price-final_price" data-role="priceBox" data-product-id="605"
+                        data-price-box="product-id-605">
+                        <span class="special-price">
+                            <span class="price-container price-final_price tax weee" itemprop="offers" itemscope
+                                itemtype="http://schema.org/Offer">
+                                <span data-price-amount="{{ price | money }}" data-price-type="finalPrice"
+                                    class="price-wrapper "><span class="price">{{ price | money }}</span></span>
+                                <meta itemprop="price" content="{{ price | money }}" />
+                                <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code | json }}" />
+                            </span>
+                        </span>
+                        {%- if compare_at_price > price -%}
+                            <span class="old-price">
+                                <span class="price-container price-final_price tax weee">
+                                    <span class="price-label">Retail Price:</span>
+                                    <span id="msrp-price-1584867917605" data-price-amount="{{ compare_at_price | money }}"
+                                        data-price-type="msrpPrice" class="prwishice-wrapper ">
+                                        <span class="price">{{ compare_at_price | money }}</span>
+                                    </span>
+                                </span>
+                            </span>
+                         {%- endif -%}
+                    </div>
+
+                    <div class="product-add-form">
+
+                        <form data-product-sku="{{ current_variant.SKU }}"
+                            data-product-form= ""
+                            data-productid="{{product.id}}"
+                            action="/cart/add" data-productid="{{ product.id }}"
+                            novalidate= 'novalidate'
+                            method="post" id="product_addtocart_form" class="form_classes">
+
+                            {% if product.available %}{% include 'subscription-product' %}{% endif %} 
+
+                            <select name="id" data-productid="{{ product.id }}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js" data-productid="{{product.id}}">
+                            {% for variant in product.variants %}
+                                <option value="{{ variant.id }}"
+                                {%- if variant == current_variant %} selected="selected" {%- endif -%}
+                                >
+                                {{ variant.title }}  {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                                </option>
+                            {% endfor %}
+                            </select>
+
+                            {% comment %} <div class="field choice">
+                                <input type="radio" value="nosubscription" id="no_subscription"
+                                    class="radio admin__control-radio required product-custom-option"
+                                    name="options[_1]" checked=checked>
+                                <label class="label" for="no_subscription"><span>One Time Only</span></label>
+                            </div>
+                            <div class="field choice">
+                                <input type="radio" value="subscription" id="subscribe_this_product"
+                                    class="radio admin__control-radio required product-custom-option"
+                                    name="options[_1]">
+                                <label class="label" for="subscribe_this_product">
+                                    <span>Auto Delivery and Save - 25%</span>
+                                </label>
+                            </div> {% endcomment %}
+                            
+                            {% comment %} <div id="md_subscription_content" >
+                                <div class="product-options-wrapper">
+                                    <div>
+                                        <div id="product-subscription-customer"
+                                            class="product-subscription-customer product-options-wrapper">
+                                            <div class="fieldset">
+                                                <div class="field required">
+                                                    <label for="billing_period" class="label">
+                                                        <span>Subscription</span>
+                                                    </label>
+                                                    <div class="control">
+                                                        <select title="Subscription"
+                                                            class=" required  admin__control-select product-custom-option"
+                                                            id="billing_period" name="billing_period">
+                                                            <option value="_1524557158629_629">30 Days</option>
+                                                            <option value="_1524557164318_318">45 Days</option>
+                                                            <option value="_1524557167549_549">60 Days</option>
+                                                            <option value="_1524557169629_629">90 Days</option>
+                                                            <option value="_1524557171712_712">120 Days</option>
+                                                            <option value="_1524680521859_859">One Day</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 class="subscription-details-title">Subscription Details</h4>
+                                        <label for="subscription_start" class="label"> Subscription Start Date : </label>
+
+                                        <span>2020-03-22</span>
+                                        <input type="hidden" name="subscription_start_date" value="2020-03-22" />
+                                        <table id="plan-attribute-specs-table"
+                                            class="plan-attribute-specs-table data table table-order-items recent">
+                                            <tbody>
+                                                <tr class="first odd">
+                                                    <td class="label">Billing Max Cycle </td>
+                                                    <td class="data last">Repeats until failed or canceled</td>
+                                                </tr>
+                                                <tr class="first odd">
+                                                    <td class="label">Discount Amount </td>
+                                                    <td class="data last">25%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> {% endcomment %}
+                            
+                            <div class="box-tocart">
+                                <div class="fieldset">
+                                    <div class="field qty">
+                                        <label class="label" for="qty"><span>Qty</span></label>
+                                        <div class="control">
+                                        <input type="number" name="qty" id="Quantity-{{ section.id }}" value="1" min="1" title="Qty"
+                                            class="input-text qty" />
+                                        </div>
+                                    </div>
+                                    <div class="actions">
+                                        <button type="submit" title="Add to Cart" class="action primary tocart"
+                                            id="product-addtocart-button">
+                                            <span>Add to Cart</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                    
+                    <div class="product-social-links">
+                        {%- if settings.enable_compare or settings.enable_wishlist -%}
+                            <div class="product-addto-links" data-role="add-to-links">
+                                {%- if settings.enable_wishlist -%}
+                                <a href="#" class="action towishlist wishlist-btn" data-product-handle="{{ product.handle }}" data-action="add-to-wishlist">
+                                    <span>Add to Wish List</span>
+                                </a>
+                                {%- endif -%}
+                                {%- if settings.enable_compare -%}
+                                <a href="#" data-product="{{ product.handle }}" data-role="add-to-links" class="action tocompare" data-compare>
+                                    <span>Add to Compare</span>
+                                </a>
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}
+                        <a href="mailto:service@wholehealth.com"
+                            class="action mailto friend">
+                            <span>Email</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- <h1 class="page-title">
+                    <span class="base">{{ product.title }}</span>
+                </h1>
+
+                <div class="product-info-stock-sku">
+                    {%- if product.available -%}
+                        <div class="stock available" title="Availability">
+                            <span>In stock</span>
+                        </div>
+                    {%- endif -%}
+                    
+                    <div class="product attribute sku">
+                        <strong class="type">SKU</strong>
+                        <div class="value" itemprop="sku">{{ product.sku }}</div>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %} <div class="catalog-product-view">
+    <div class="columns container layout_1">
+        <div class="column main row">
+            <div class="product-info-main">
+                <div class="page-title-wrapper product">
+                    <div class="container">
+                        <h1 class="page-title">
+                            <span class="base">NOW® Liver Refresh™ (90 Veg Caps)</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="product-info-stock-sku">
+                    <div class="stock available" title="Availability">
+                        <span>In stock</span>
+                    </div>
+                    <div class="product attribute sku">
+                        <strong class="type">SKU</strong>
+                        <div class="value" itemprop="sku">LD1N</div>
+                    </div>
+                </div>
+                <div class="product-reviews-summary empty">
+                    <div class="reviews-actions">
+                        <a class="action add"
+                            href="high-potency-detox-liver-support-resveratrol-60-capsules.html#review-form">
+                            Be the first to review this product </a>
+                    </div>
+                </div>
+                <div class="price-box price-final_price" data-role="priceBox" data-product-id="605"
+                    data-price-box="product-id-605">
+                    <span class="special-price">
+                        <span class="price-container price-final_price tax weee" itemprop="offers" itemscope
+                            itemtype="http://schema.org/Offer">
+                            <span id="product-price-605" data-price-amount="14.32" data-price-type="finalPrice"
+                                class="price-wrapper "><span class="price">$14.32</span></span>
+                            <meta itemprop="price" content="14.32" />
+                            <meta itemprop="priceCurrency" content="USD" />
+                        </span>
+                    </span>
+                    <span class="old-price">
+                        <span class="price-container price-final_price tax weee">
+                            <span class="price-label">Retail Price:</span>
+                            <span id="msrp-price-1584867917605" data-price-amount="23.99"
+                                data-price-type="msrpPrice" class="price-wrapper ">
+                                <span class="price">$23.99</span>
+                            </span>
+                        </span>
+                    </span>
+                </div>
+
+                <div class="product-add-form">
+                    <form data-product-sku="LD1N"
+                        action="https://www.wholehealth.com/checkout/cart/add/uenc/aHR0cHM6Ly93d3cud2hvbGVoZWFsdGguY29tL2hpZ2gtcG90ZW5jeS1kZXRveC1saXZlci1zdXBwb3J0LXJlc3ZlcmF0cm9sLTYwLWNhcHN1bGVzLmh0bWw%2C/product/605/"
+                        method="post" id="product_addtocart_form">
+                        <input type="hidden" name="product" value="605" />
+                        <input type="hidden" name="selected_configurable_option" value="" />
+                        <input type="hidden" name="related_product" id="related-products-field" value="" />
+                        <input type="hidden" name="item" value="605" />
+                        <input name="form_key" type="hidden" value="ScuZloAfb5s8qb3I" /> <input type="hidden"
+                            name="productviewpage" value="yes" />
+
+                        <div class="field choice">
+                            <input type="radio" value="nosubscription" id="no_subscription"
+                                class="radio admin__control-radio required product-custom-option"
+                                name="options[_1]" checked=checked>
+                            <label class="label" for="no_subscription"><span>One Time Only</span></label>
+                        </div>
+                        <div class="field choice">
+                            <input type="radio" value="subscription" id="subscribe_this_product"
+                                class="radio admin__control-radio required product-custom-option"
+                                name="options[_1]">
+                            <label class="label" for="subscribe_this_product">
+                                <span>Auto Delivery and Save - 25%</span>
+                            </label>
+                        </div>
+                        
+                        <div id="md_subscription_content" style="display: none;">
+                            <div class="product-options-wrapper">
+                                <div>
+                                    <div id="product-subscription-customer"
+                                        class="product-subscription-customer product-options-wrapper">
+                                        <div class="fieldset">
+                                            <div class="field required">
+                                                <label for="billing_period" class="label">
+                                                    <span>Subscription</span>
+                                                </label>
+                                                <div class="control">
+                                                    <select title="Subscription"
+                                                        class=" required  admin__control-select product-custom-option"
+                                                        id="billing_period" name="billing_period">
+                                                        <option value="_1524557158629_629">30 Days</option>
+                                                        <option value="_1524557164318_318">45 Days</option>
+                                                        <option value="_1524557167549_549">60 Days</option>
+                                                        <option value="_1524557169629_629">90 Days</option>
+                                                        <option value="_1524557171712_712">120 Days</option>
+                                                        <option value="_1524680521859_859">One Day</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="subscription-details-title">Subscription Details</h4>
+                                    <label for="subscription_start" class="label"> Subscription Start Date : </label>
+
+                                    <span>2020-03-22</span>
+                                    <input type="hidden" name="subscription_start_date" value="2020-03-22" />
+                                    <table id="plan-attribute-specs-table"
+                                        class="plan-attribute-specs-table data table table-order-items recent">
+                                        <tbody>
+                                            <tr class="first odd">
+                                                <td class="label">Billing Max Cycle </td>
+                                                <td class="data last">Repeats until failed or canceled</td>
+                                            </tr>
+                                            <tr class="first odd">
+                                                <td class="label">Discount Amount </td>
+                                                <td class="data last">25%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="box-tocart">
+                            <div class="fieldset">
+                                <div class="field qty">
+                                    <label class="label" for="qty"><span>Qty</span></label>
+                                    <div class="control">
+                                        <input type="number" name="qty" id="qty" value="1" title="Qty"
+                                            class="input-text qty"
+                                            data-validate="{&quot;required-number&quot;:true,&quot;validate-item-quantity&quot;:{&quot;minAllowed&quot;:1,&quot;maxAllowed&quot;:10000}}" />
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <button type="submit" title="Add to Cart" class="action primary tocart"
+                                        id="product-addtocart-button">
+                                        <span>Add to Cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+                
+                <div class="product-social-links">
+                    <div class="product-addto-links" data-role="add-to-links">
+                        <a href="#" class="action towishlist" data-action="add-to-wishlist">
+                            <span>Add to Wish List</span>
+                        </a>
+                        <a href="#" data-role="add-to-links" class="action tocompare">
+                            <span>Add to Compare</span>
+                        </a>
+                    </div>
+                    <a href="mailto:service@wholehealth.com"
+                        class="action mailto friend">
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+            <div class="product media">
+                <div class="product-images-wrapper horizontal_classic pr-lg-4 text-center">
+                    {% if featured_image != blank %}
+                        <div class="carousel carousel-main" role="tree"
+                            data-carousel-main
+                            data-flickity='{
+                            "adaptiveHeight": true,
+                            "contain": true,
+                            "wrapAround": false,
+                            "freeScroll": false,
+                            "accessibility": false,
+                            "setGallerySize": true,
+                            "prevNextButtons": true,
+                            "pageDots": false,
+                            "lazyLoad": true,
+                            "fullscreen": true,
+                            "dragThreshold": 20,
+                            "arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 60, "y2": 45, "x3": 15}
+                            }'>
+                        {% for image in product.images %}
+                            <img class="carousel-cell img-fluid" role="treeitem"
+                            data-flickity-lazyload-src="{{ image.src | img_url: 'large' }}"
+                            data-flickity-lazyload-srcset="
+                                {{ image.src | img_url: 'large' }} 576w,
+                                {{ image.src | img_url: '1280x' }} 768w,
+                                {{ image.src | img_url: '1440x' }} 992w,
+                                {{ image.src | img_url: '1920x' }} 1200w
+                                "
+                            data-variant-title="{{ image.alt | escape }}"
+                            alt="{{ image.alt | escape }}"/>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div> {% endcomment %}

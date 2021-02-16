@@ -1,0 +1,264 @@
+<div data-section-id="{{ section.id }}" class="index-blog-post-section">
+  {% comment %} <div class="container"> {% endcomment %}
+    <div class="block widget blog-posts last_widget">
+      {% if section.settings.title != blank %}
+      <h1 class="page-title">
+        <strong role="heading" aria-level="2">{{ section.settings.title | escape }}</strong>
+      </h1>
+      {% endif %}
+      {%- assign blog = blogs[section.settings.blog] -%}
+
+      <div class="post-items carousel-main" role="tree" data-carousel-main data-flickity='{
+          "adaptiveHeight": false,
+          "contain": true,
+          "prevNextButtons": true,
+          "wrapAround": true,
+          "pageDots": false,
+          "groupCells" : "100%",
+          "lazyLoad": true,
+          "cellAlign" : "left",
+          "arrowShape":  {"x0": 10, "x1": 60, "y1": 45, "x2": 60, "y2": 35, "x3": 20}
+        }'>
+        {% for article in blog.articles limit: section.settings.post_limit %}
+        <div role="treeitem"
+          class="carousel-cell equal-height col-lg-4 col-md-4 col-sm-12">
+          <div class="post-item">
+            <div class="item-wrapper">
+              <!-- Image -->
+              <div class="post-image">
+                <a href="{{ article.url }}" class="d-block"><img src="{{ article.image | img_url: '300x300' }}"
+                    alt="{{ article.title }}" /></a>
+              </div>
+
+              <!-- Title -->
+              <div class="post-title">
+                <h3>
+                  <a href="{{ article.url }}">{{ article.title | truncate: 28 }}</a>
+                </h3>
+              </div>
+
+              <!-- Metadata -->
+              <div class="post-data">
+                {% if blog.comments_enabled? %}
+                <span class="post-comments">
+                  <span
+                    class="count no-comment">{{ article.comments_count }}</span>
+                </span>
+                {% endif %}
+
+                {% if section.settings.blog_show_date %}
+                <span class="create-date material-icons-access_time">
+                  <time>{{ article.published_at | time_tag: format: 'date' }}</time>
+                </span>
+                {% endif %}
+              </div>
+              <a href="{{ article.url }}" class="post-button">
+                <span>Read More</span>
+              </a>
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% comment %} </div> {% endcomment %}
+</div>
+
+
+{% schema %}
+{
+  "name": {
+    "da": "Blogopslag",
+    "de": "Blogposts",
+    "en": "Blog posts",
+    "es": "Entradas del blog",
+    "fi": "Blogijulkaisut",
+    "fr": "Articles de blog",
+    "hi": "ब्लॉग पोस्ट",
+    "it": "Articoli del blog",
+    "ja": "ブログ記事",
+    "ko": "블로그 게시물",
+    "nb": "Blogginnlegg",
+    "nl": "Blogberichten",
+    "pt-BR": "Posts do blog",
+    "pt-PT": "Publicações no blogue",
+    "sv": "Blogginlägg",
+    "th": "โพสต์บล็อก",
+    "zh-CN": "博客文章",
+    "zh-TW": "部落格文章"
+  },
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "da": "Overskrift",
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fi": "Otsake",
+        "fr": "En-tête",
+        "hi": "शीर्षक",
+        "it": "Heading",
+        "ja": "見出し",
+        "ko": "제목",
+        "nb": "Overskrift",
+        "nl": "Kop",
+        "pt-BR": "Título",
+        "pt-PT": "Título",
+        "sv": "Rubrik",
+        "th": "ส่วนหัว",
+        "zh-CN": "标题",
+        "zh-TW": "標題"
+      },
+      "default": {
+        "da": "Blogopslag",
+        "de": "Blogposts",
+        "en": "Blog posts",
+        "es": "Entradas del blog",
+        "fi": "Blogijulkaisut",
+        "fr": "Articles de blog",
+        "hi": "ब्लॉग पोस्ट",
+        "it": "Articoli del blog",
+        "ja": "ブログ記事",
+        "ko": "블로그 게시물",
+        "nb": "Blogginnlegg",
+        "nl": "Blogberichten",
+        "pt-BR": "Posts do blog",
+        "pt-PT": "Publicações no blogue",
+        "sv": "Blogginlägg",
+        "th": "โพสต์บล็อก",
+        "zh-CN": "博客文章",
+        "zh-TW": "部落格文章"
+      }
+    },
+    {
+      "id": "blog",
+      "type": "blog",
+      "label": {
+        "da": "Blog",
+        "de": "Blog",
+        "en": "Blog",
+        "es": "Blog",
+        "fi": "Blogi",
+        "fr": "Blog",
+        "hi": "ब्लॉग",
+        "it": "Blog",
+        "ja": "ブログ",
+        "ko": "블로그",
+        "nb": "Blogg",
+        "nl": "Blog",
+        "pt-BR": "Blog",
+        "pt-PT": "Blogue",
+        "sv": "Blogg",
+        "th": "บล็อก",
+        "zh-CN": "博客",
+        "zh-TW": "部落格"
+      }
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": {
+        "da": "Opslag",
+        "de": "Posts",
+        "en": "Posts",
+        "es": "Publicaciones",
+        "fi": "Julkaisut",
+        "fr": "Articles",
+        "hi": "पोस्ट",
+        "it": "Articoli",
+        "ja": "投稿",
+        "ko": "게시물",
+        "nb": "Innlegg",
+        "nl": "Berichten",
+        "pt-BR": "Posts",
+        "pt-PT": "Publicações",
+        "sv": "Inlägg",
+        "th": "โพสต์",
+        "zh-CN": "文章",
+        "zh-TW": "貼文"
+      },
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": {
+        "da": "Vis dato",
+        "de": "Datum anzeigen",
+        "en": "Show date",
+        "es": "Mostrar fecha",
+        "fi": "Näytä päivämäärä",
+        "fr": "Afficher la date",
+        "hi": "दिनांक दिखाएं",
+        "it": "Mostra data",
+        "ja": "日付を表示する",
+        "ko": "날짜 표시",
+        "nb": "Vis dato",
+        "nl": "Datum weergeven",
+        "pt-BR": "Exibir data",
+        "pt-PT": "Mostrar data",
+        "sv": "Visa datum",
+        "th": "แสดงวันที่",
+        "zh-CN": "显示日期",
+        "zh-TW": "顯示日期"
+      },
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "da": "Blogopslag",
+        "de": "Blogposts",
+        "en": "Blog posts",
+        "es": "Entradas del blog",
+        "fi": "Blogijulkaisut",
+        "fr": "Articles de blog",
+        "hi": "ब्लॉग पोस्ट",
+        "it": "Articoli del blog",
+        "ja": "ブログ記事",
+        "ko": "블로그 게시물",
+        "nb": "Blogginnlegg",
+        "nl": "Blogberichten",
+        "pt-BR": "Posts do blog",
+        "pt-PT": "Publicações no blogue",
+        "sv": "Blogginlägg",
+        "th": "โพสต์บล็อก",
+        "zh-CN": "博客文章",
+        "zh-TW": "部落格文章"
+      },
+      "category": {
+        "da": "Blog",
+        "de": "Blog",
+        "en": "Blog",
+        "es": "Blog",
+        "fi": "Blogi",
+        "fr": "Blog",
+        "hi": "ब्लॉग",
+        "it": "Blog",
+        "ja": "ブログ",
+        "ko": "블로그",
+        "nb": "Blogg",
+        "nl": "Blog",
+        "pt-BR": "Blog",
+        "pt-PT": "Blogue",
+        "sv": "Blogg",
+        "th": "บล็อก",
+        "zh-CN": "博客",
+        "zh-TW": "部落格"
+      },
+      "settings": {
+        "blog": "News",
+        "post_limit": 3
+      }
+    }
+  ]
+}
+{% endschema %}

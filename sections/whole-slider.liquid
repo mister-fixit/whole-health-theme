@@ -1,0 +1,159 @@
+{% if section.settings.enabled %}
+<section data-section-id="{{ section.id }}" class="header-slider bg-gray-100 {% if section.settings.is_hidden_on_mobile %}d-none d-sm-block{% endif %}">
+    {% comment %} <div class="container"> {% endcomment %}
+        <div class="carousel-desktop {{section.settings.height}}" role="tree" data-header-slider data-flickity='{
+            "adaptiveHeight": true,
+            "cellAlign": "left",
+            "contain": false,
+            "wrapAround": true,
+            "groupCells": "false",
+            "freeScroll": false,
+            "accessibility": true,
+            "lazyLoad": 2,
+            "dragThreshold": 20,
+            "prevNextButtons": {{section.settings.nav_arrows}},
+            "pageDots": {{section.settings.nav_dots}},
+            {% if section.settings.auto_play > 0 %}"autoPlay": {{section.settings.auto_play}}000,{% endif %}
+            "arrowShape": {"x0": 10, "x1": 60, "y1": 45, "x2": 60, "y2": 35, "x3": 20}
+            }'>
+
+            {% for block in section.blocks limit: section.blocks.limit %}
+            {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+
+            <div class="carousel-cell col-12 px-0 bg-dark" role="treeitem" {{ block.shopify_attributes }}
+                data-block-id="{{ block.id }}"
+                data-slide-type="{% if block.type == 'video' %}video{% else %}image{% endif %}">
+
+                {% if block.type == 'image' %}
+                {% if block.settings.image == blank %}
+                {{'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg'}}
+                {% else %}
+                <a href="{{ block.settings.img_btn_url }}" class="d-block" aria-label="wholehealth">
+                    <img data-sizes="auto" src="{{ block.settings.image | img_url: 'master'}}"
+                        class="lazyload d-md-block d-none w-100" alt="Whole Health" />
+                    {%- if block.settings.image_mobile != blank -%}
+                    <img data-sizes="auto" src="{{ block.settings.image_mobile | img_url: 'master'}}"
+                        class="lazyload d-block d-md-none" alt="Whole Health" />
+                    {%- else -%}
+                    <img data-sizes="auto" src="{{ block.settings.image | img_url: 'master'}}"
+                        class="lazyload d-block d-md-none" alt="Whole Health" />
+                    {%- endif -%}
+                </a>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% endfor %}
+
+        </div>
+    {% comment %} </div> {% endcomment %}
+</section>
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Header Slider",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Layout"
+        },
+        {
+            "type": "checkbox",
+            "id": "enabled",
+            "label": "Enabled?",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "is_hidden_on_mobile",
+            "label": "Hidden on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "nav_arrows",
+            "label": "Arrows Navigation",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "nav_dots",
+            "label": "Dots Navigation",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "height",
+            "label": "Slider Height",
+            "options": [
+                {
+                    "value": "shortheight",
+                    "label": "Short"
+                },
+                {
+                    "value": "tallheight",
+                    "label": "Tall"
+                },
+                {
+                    "value": "fullheight",
+                    "label": "Full Height"
+                },
+                {
+                    "value": "fixedheight",
+                    "label": "Fix Height"
+                },
+                {
+                    "value": "autoheight",
+                    "label": "Auto Height"
+                }
+            ],
+            "default": "autoheight"
+        },
+        {
+            "type": "range",
+            "id": "auto_play",
+            "label": "Autoplay",
+            "info": "Duration of animation between slides (in seconds). Select the value of 0 if you don't want the slider to autoplay.",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "default": 0
+        }
+    ],
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image Slide",
+            "settings": [
+                {
+                    "type": "url",
+                    "id": "img_btn_url",
+                    "label": "Add Banner url"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image for Desktop"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_mobile",
+                    "label": "Select Image for Mobile"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "category": "Image",
+            "name":"Index Slider",
+            "blocks": [
+                {
+                    "type": "image"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}

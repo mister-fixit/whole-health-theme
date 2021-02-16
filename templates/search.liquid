@@ -1,0 +1,165 @@
+{% paginate search.results by 10 %}
+
+<div class="page-width">
+  {% if search.performed == false %}
+    <div class="text-center">
+      <h1 class="h2">{{ 'general.search.title' | t }}</h1>
+  {% else %}
+    <div class="text-center">
+      <h1 class="h2">
+        <span class="visually-hidden">{{ 'general.search.heading' | t: count: search.results_count }}:</span>
+        {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+      </h1>
+  {% endif %}
+      <div class="grid">
+        <div class="grid__item medium-up--six-tenths medium-up--push-two-tenths">
+          {% if search.performed and search.results_count == 0 %}
+            <div class="rte search--no-results-found">
+              <p>{{ 'general.search.no_results' | t }}</p>
+            </div>
+          {% endif %}
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search-form search-page-form">
+            <div class="input-group input-group--nowrap">
+              <div class="input-group__field input-group__field--connected search-form__input-wrapper">
+                <input
+                  type="search"
+                  name="q"
+                  value="{{ search.terms | escape }}"
+                  placeholder="{{ 'general.search.placeholder' | t }}"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-owns="predictive-search-results"
+                  aria-expanded="false"
+                  aria-label="{{ 'general.search.placeholder' | t }}"
+                  aria-haspopup="listbox"
+                  class="search-form__input"
+                  data-search-page-predictive-search-input
+                />
+
+                <input type="hidden" name="options[prefix]" value="last" aria-hidden="true" />
+
+                <button type="reset" class="search-form__clear-action" aria-label="{{ 'general.search.clear_search_term' | t }}" data-search-page-predictive-search-clear>
+                  {% include 'icon-close' %}
+                </button>
+
+                <div class="predictive-search-wrapper" data-predictive-search-mount="default"></div>
+              </div>
+
+              <button type="submit" class="search-form__connected-submit" aria-label="{{ 'general.search.submit' | t }}" data-search-page-predictive-search-submit>
+                {% include 'icon-search' %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+{% if search.performed %}
+  {% if search.results_count > 0 %}
+    <hr aria-hidden="true" />
+  {% endif %}
+
+  <div class="products wrapper grid products-grid layout_1">
+    <ul class="products list items product-items">
+      {%- for item in search.results -%}
+        {% if item.object_type == 'product' %}
+          {%- include 'product-grid-item', product: item -%}
+        {% else %}
+          <li class="item product product-item">
+            <div class="product-item-info " data-container="product-grid">
+
+              {%- assign preview_image = item.image -%}
+              {%- assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+              <a href="{{ item.url }}" class="product photo product-item-photo"
+                tabindex="-1">
+                <span class="product-image-container" style="width:470px;">
+                  {% if preview_image != blank %}
+                    <span class="product-image-wrapper"
+                      style="padding-bottom:100%;">
+                      <img class="grid-view-item__image lazyload product-image-photo" alt="{{ preview_image.alt }}"
+                        data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                        data-aspectratio="{{ preview_image.aspect_ratio }}" data-sizes="auto" data-image>
+                    </span>
+                    {% else %}
+                      <span class="product-image-wrapper" style="padding-bottom:100%;">
+                          <img class="grid-view-item__image lazyload product-image-photo" alt="Whole Health"
+                              src="https://cdn.shopify.com/s/files/1/0371/8086/6605/files/tr-logo.png?v=1585496244"
+                              data-sizes="auto" data-image>
+                      </span>
+                  {% endif %}
+                </span>
+              </a>
+
+              <div class="product details product-item-details">
+
+                <strong class="product name product-item-name" itemprop="name">
+                  <a class="product-item-link" href="{{ item.url }}">{{ item.title }}</a>
+                </strong>
+                <div class="product description product-item-description" itemprop="description">
+                  {% if item.published_at %}{{ item.published_at | date: format: "date" }} &#8212; {% endif %}
+                  {{ item.content | strip_html | truncate: 200 }}
+                </div>
+              </div>
+            </div>
+          </li>
+        {% endif %}
+      {%- endfor -%}
+    </ul>
+  </div>
+
+  {%- comment -%}
+  <ul class="page-width list-view-items">
+    {% for item in search.results %}
+      <li class="list-view-item">
+        {% if item.object_type == 'product' %}
+          {% include 'product-card-list', product: item %}
+        {% else %}
+          <div class="product-card product-card--list">
+            <a href="{{ item.url }}" class="full-width-link">
+              <span class="visually-hidden">{{ item.title }}</span>
+            </a>
+            <div class="list-view-item__link">
+              <div class="list-view-item__image-column">
+                <div class="list-view-item__image-wrapper product-card__image-wrapper">
+                  {% unless item.image == null %}
+                    <img class="list-view-item__image" src="{{ item.image.src | img_url: '600x600' }}" alt="{{ item.image.alt | escape }}">
+                  {% endunless %}
+                </div>
+              </div>
+
+              <div class="list-view-item__title-column">
+                <div class="list-view-item__title" aria-hidden="true">
+                  <span class="product-card__title">{{ item.title }}</span>
+                </div>
+                <div>
+                  {% if item.published_at %}{{ item.published_at | date: format: "date" }} &#8212; {% endif %}
+                  {{ item.content | strip_html | truncate: 200 }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  {%- endcomment -%}
+
+  <div class="toolbar-bottom">
+    <div class="toolbar toolbar-products toolbar-posts">
+        <div class="pages">
+            {%- if paginate.pages > 1 -%}
+                {% include 'pagination', paginate: paginate %}
+            {%- endif -%}
+        </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if search.results_count < 2  %}
+  <div class="search--less-than-2-results"></div>
+{% endif %}
+
+{% endpaginate %}

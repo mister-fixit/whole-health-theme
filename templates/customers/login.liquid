@@ -1,0 +1,217 @@
+
+<div class="customer_login">
+
+  {% comment %} password recover form {% endcomment %}
+  <div id="RecoverPasswordForm" class="hide">
+    <div class="page-title-wrapper">
+      <div class="container">
+        <h1 class="page-title">
+          <span class="base">{{ 'customer.recover_password.title' | t }}</span> </h1>
+      </div>
+    </div>
+
+    <div class="columns container">
+      <div class="column main">
+
+        {% form 'recover_customer_password', class: 'form password forget' %}
+
+          {% comment %}
+            Add a hidden span to indicate the form was submitted succesfully.
+          {% endcomment %}
+          {% if form.posted_successfully? %}
+            <span class="hide reset-password-success"></span>
+          {% endif %}
+          
+          <fieldset class="fieldset">
+            <div class="field note">{{ 'customer.recover_password.subtext' | t }}</div>
+
+            <div class="field email required">
+              <label for="RecoverEmail" class="label"><span>{{ 'customer.recover_password.email' | t }}</span></label>
+              <div class="control">
+                <input
+                  type="email"
+                  value=""
+                  name="email"
+                  id="RecoverEmail"
+                  class="input-full input-text{% if form.errors %} input--error{% endif %}"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  {% if form.errors %}
+                    aria-invalid="true"
+                    aria-describedby="RecoverEmail-email-error"
+                  {%- endif -%}
+                >
+              </div>
+            </div>
+            
+          </fieldset>
+
+          {%- if form.errors -%}
+            <span id="RecoverEmail-email-error" class="input-error-message">
+              <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+              {% include 'icon-error' %}
+              <span>{{ form.errors.messages['form'] }}</span>
+            </span>
+          {%- endif -%}
+
+          <div class="actions-toolbar">
+            <div class="primary">
+              <button type="submit" class="action submit primary">
+              <span>{{ 'customer.recover_password.submit' | t }}</span></button>
+            </div>
+            <div class="secondary">
+              <a id="HideRecoverPasswordLink" class="action back" href="#LoginHeading">
+                <span>{{ 'customer.recover_password.cancel' | t }}</span>
+              </a>
+            </div>
+          </div>
+        {% endform %}
+
+        {% comment %} <form class="form password forget" action="https://www.wholehealth.com/customer/account/forgotpasswordpost/"
+          method="post" id="form-validate">
+          <fieldset class="fieldset">
+            <div class="field note">{{ 'customer.recover_password.subtext' | t }}</div>
+
+            <div class="field email required">
+              <label for="email_address" class="label"><span>Email</span></label>
+              <div class="control">
+                <input type="email" name="email" alt="email" id="email_address" class="input-text" value=""
+                  data-mage-init='{"mage/trim-input":{}}' data-validate="{required:true, 'validate-email':true}">
+              </div>
+            </div>
+            
+          </fieldset>
+
+          <div class="actions-toolbar">
+            <div class="primary">
+              <button type="submit" class="action submit primary">
+              <span>{{ 'customer.recover_password.submit' | t }}</span></button>
+            </div>
+            <div class="secondary">
+              <a id="HideRecoverPasswordLink" class="action back" href="#LoginHeading">
+                <span>{{ 'customer.recover_password.cancel' | t }}</span>
+              </a>
+            </div>
+          </div>
+        </form> {% endcomment %}
+      </div>
+    </div>
+  </div>
+
+  {% comment %} customer login form {% endcomment %}
+  <div id="CustomerLoginForm" class="form-vertical">
+    <div class="page-title-wrapper" id="LoginHeading" >
+      <div class="container">
+        <h1 class="page-title">
+          <span class="base">{{ 'customer.login.title' | t }}</span> </h1>
+      </div>
+    </div>
+
+    <div class="columns container">
+      <div class="column main">
+        <div class="login-container">
+          <div class="row">
+            <div class="col-md-8 col-md-preffix-2">
+              <div class="block block-customer-login">
+                <div class="block-title">
+                  <strong id="block-customer-login-heading" role="heading" aria-level="2">Registered Customers</strong>
+                </div>
+                <div class="block-content" aria-labelledby="block-customer-login-heading">
+
+                  {% form 'customer_login', novalidate: 'novalidate', class: 'form form-login' %}
+                    {%- if form.errors -%}
+                      <div class="form-message form-message--error">
+                        <h2 class="h3 form-message__title " tabindex="-1" data-form-status>{{ 'contact.form.error_heading' | t }}</h2>
+                        {{ form.errors | default_errors }}
+                      </div>
+                    {%- endif -%}
+
+                    <fieldset class="fieldset login">
+                      <div class="field note">If you have an account, sign in with your email address.</div>
+
+                      <div class="field email required">
+                        <label class="label" for="CustomerEmail"><span>{{ 'customer.login.email' | t }}</span></label>
+                        <div class="control">
+                          <input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" autocorrect="off" autocapitalize="off"
+                            class="input-text {%- if form.errors contains 'form' -%} input--error{%- endif -%}"
+                            {%- if form.errors contains 'form' -%} aria-invalid="true" {%- endif -%} >
+                        </div>
+                      </div>
+
+                      {% if form.password_needed %}
+                        <div class="field password required">
+                          <label for="CustomerPassword" class="label"><span>{{ 'customer.login.password' | t }}</span></label>
+                          <div class="control">
+                            <input type="password" value="" name="customer[password]" id="CustomerPassword" autocomplete="off" class="input-text {%- if form.errors contains 'form' -%}input--error{%- endif -%}"
+                              {%- if form.errors contains 'form' -%} aria-invalid="true" {%- endif -%} >
+                          </div>
+                        </div>
+                      {% endif %}
+
+                      <div class="actions-toolbar">
+
+                        <div class="primary">
+                          <button type="submit" class="action login primary" name="send" id="send2">
+                            <span>{{ 'customer.login.sign_in' | t }}</span>
+                          </button>
+                        </div>
+
+                        {% if form.password_needed %}
+                          <div class="secondary">
+                            <a class="action remind" id="RecoverPassword" href="#recover">
+                              <span>{{ 'customer.login.forgot_password' | t }}</span>
+                            </a>
+                          </div>
+                        {% endif %}
+
+                      </div>
+                    </fieldset>
+                    
+                  {% endform %}
+<!-- Begin ReCharge code -->
+{% include 'subscription-account-login' %}
+<!-- End ReCharge code -->
+
+                </div>
+              </div>
+
+              <div class="block block-new-customer">
+                <div class="block__title">
+                  <strong id="block-new-customer-heading" class="heading-3" role="heading" aria-level="2">New Customers</strong>
+                </div>
+                <div class="block__content" aria-labelledby="block-new-customer-heading">
+                  <p>Creating an account has many benefits: check out faster, keep more than one
+                    address, track orders and more.</p>
+                  <div class="actions-toolbar">
+                    <div class="primary">
+                      <a href="/account/register" class="action create primary"><span>{{ 'layout.customer.create_account' | t }}</span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% comment %}
+    If accounts are set as optional, the following will be shown as an option
+    during checkout, not on the default /login page.
+  {% endcomment %}
+  
+  {% if shop.checkout.guest_login %}
+    <div class="text-center">
+      <hr class="hr--invisible">
+      <h2>{{ 'customer.login.guest_title' | t }}</h2>
+
+      {% form 'guest_login' %}
+        <input type="submit" class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+      {% endform %}
+    </div>
+  {% endif %}
+
+</div>
+

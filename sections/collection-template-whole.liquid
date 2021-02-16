@@ -1,0 +1,108 @@
+
+{%- assign paginationArray = section.settings.pagination_number | split: ',' -%}
+{%- assign paginationAmount = paginationArray | first -%}
+{%- if cart.attributes.pagination != blank -%}
+    {%- assign paginationAmount = cart.attributes.pagination | default:paginationAmount | abs -%}
+{%- endif -%}
+
+{% paginate collection.products by paginationAmount %}
+<div data-section-id="{{ section.id }}" data-section-type="collection-template">
+    <div class="page-title-wrapper">
+        <div class="container">
+            <h1 class="page-title" id="page-title-heading">
+                <span class="base">{{ collection.title }}</span>
+            </h1>
+        </div>
+    </div>
+    <div class="category-view container">
+        {% if collection.description != blank %}
+            <div class="category-description rte">
+                {{ collection.description }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="column main container">
+
+        <div class="toolbar toolbar-products d-flex justify-content-between align-items-center">
+            
+            <div class="toolbar-sorter sorter field">
+                {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                <label class="sorter-label label" for="SortBy">{{ 'collections.sorting.title' | t }}</label>
+                <div class="control">
+                    <select name="sort_by" id="SortBy" class="sorter-options hidden"
+                        aria-describedby="a11y-refresh-page-message a11y-selection-message"
+                        data-default-sortby="{{ collection.default_sort_by }}">
+                        {%- for option in collection.sort_options -%}
+                        <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"
+                            {% endif %}>{{ option.name }}</option>
+                        {%- endfor -%}
+                    </select>
+                </div>
+            </div>
+
+            <div class="toolbar-amountt" id="toolbar-amount">
+                Items <span class="toolbar-number">{{collection.products_count}}</span>
+            </div>
+
+            <div class="field limiter" style="display: block">
+                <label class="label" for="limiter">
+                    <span>Show</span>
+                </label>
+                <div class="control">
+                    <select id="limiter" data-role="limiter" class="limiter-options">
+                        {%- assign paginationAmounts = section.settings.pagination_number | split:',' -%}
+                        {%- for i in paginationAmounts -%}
+                            {% assign v = i | append:'' %}
+                            <option value="{{ v }}"
+                                {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == v %}
+                                selected{% endif %}{% else %}{% if i == paginationAmount %}
+                                selected{% endif %}{% endif %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <span class="limiter-text">per page</span>
+            </div>
+
+        </div>
+
+        <div class="products wrapper grid products-grid layout_1">
+            
+            <ul class="products list items product-items">
+                {%- for product in collection.products -%}
+                    {%- include 'product-grid-item' -%}
+                {%- else -%}
+                    <div class="grid__item py-5">
+                        <p>{{ 'collections.general.no_matches' | t }}</p>
+                    </div>
+                {%- endfor -%}
+            </ul>
+            
+        </div>
+
+        <div class="toolbar-bottom">
+            <div class="toolbar toolbar-products toolbar-posts">
+                <div class="pages">
+                    {%- if paginate.pages > 1 -%}
+                        {% include 'pagination', paginate: paginate %}
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endpaginate %}
+
+{% schema %}
+{
+    "name": "Collection Template",
+    "settings": [
+        {
+            "type": "textarea",
+            "id": "pagination_number",
+            "label": "Enter pagination number",
+            "info": "Enter pagination number by comma(,) separated. Eg. 3,9,12"
+        }
+    ]
+}
+{% endschema %}

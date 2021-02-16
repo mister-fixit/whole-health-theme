@@ -1,0 +1,321 @@
+
+{%- if comment.status == 'pending' -%}
+  {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+{%- else -%}
+  {%- assign number_of_comments = article.comments_count -%}
+{%- endif -%}
+
+<section data-section-id="{{ section.id }}" class="section-article-template">
+  <div class="row justify-content-center">
+      <div class="col-sm-9 grid-main">
+          <div class="column main">
+              <div class="page-title-wrapper">
+                <div class="container p-0">
+                  <h1 class="page-title text-center">
+                    <span class="base">{{ article.title }}</span>
+                  </h1>
+                </div>
+              </div>
+
+              <div class="post-page">
+                  <div class="post-content">
+                      <div class="post-data">
+                          <span class="create-date">
+                              <time>{{ article.published_at | time_tag: format: 'date' }}</time>
+                          </span>
+                          {% if blog.comments_enabled? %}
+                            <span class="post-comments">
+                              <a href="{{ article.url }}#comments">
+                                <span class="count">{{ article.comments_count }}</span>
+                              </a>
+                            </span>
+                          {% endif %}
+                      </div>
+                      <div class="post-text">{{ article.content }}</div>
+                      
+                      {% if blog.comments_enabled? %}
+
+                        {% if number_of_comments > 0 %}
+                          <div class="comment-count">
+                            <div class="grid">
+                              <div class="grid__item medium-up--five-sixths">
+                                <h2 class="h3">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h2>
+
+                                {% paginate article.comments by 5 %}
+
+                                  {% comment %}
+                                    #comments is required, it is used as an anchor link by Shopify.
+                                  {% endcomment %}
+                                  <div id="comments">
+                                    <ul class="comments">
+                                      {% comment %}
+                                        If a comment was just submitted with no blank field, show it.
+                                      {% endcomment %}
+                                      {% if comment.status == 'pending' %}
+                                        <li id="{{ comment.id }}" class="comment">
+                                          {% include 'comment', comment: comment %}
+                                        </li>
+                                      {% endif %}
+
+                                      {% for comment in article.comments %}
+                                        <li id="{{ comment.id }}" class="comment">
+                                          {% include 'comment', comment: comment %}
+                                        </li>
+                                      {% endfor %}
+                                    </ul>
+
+                                    {%- if paginate.pages > 1 -%}
+                                      {% include 'pagination', paginate: paginate %}
+                                    {%- endif -%}
+
+                                  </div>
+                                {% endpaginate %}
+                              </div>
+                            </div>
+                          </div>
+                          <hr aria-hidden="true">
+                        {% endif %}
+                        
+                        <div id="post-comments" class="post-comments-block">
+                          <h2 class="post-comments-title">{{ 'blogs.comments.title' | t }}</h2>
+
+                          <div class="post-comments-content">
+                          </div>
+
+                          <div class="comment-add">
+                            <h2 class="post-comments-title">Leave A Reply</h2>
+                            <p class="subtitle">Your email address will not be published.</p>
+
+                            {% form 'new_comment', article %}
+
+                              {%- assign formId = 'CommentForm' -%}
+
+                              {%- assign post_message = 'blogs.comments.success' -%}
+                              {%- if blog.moderated? and comment.status == 'pending' -%}
+                              {%- assign post_message = 'blogs.comments.success_moderated' -%}
+                              {%- elsif comment.status == 'unapproved' or comment.status == 'spam' -%}
+                              {%- assign post_message = 'blogs.comments.unapproved' -%}
+                              {%- endif -%}
+
+                              {% include 'form-status', form: form, form_id: formId, success_message: post_message %}
+
+                              <fieldset class="fieldset comment-fieldset">
+
+                                <div class="field comment-field-name">
+                                  <label for="name_field" class="label"><span>{{ 'blogs.comments.name' | t }}:</span></label>
+                                  <div class="control">
+                                    <input type="text" name="comment[author]" id="name_field"
+                                      class="input-text{% if form.errors contains 'author' %} input--error{% endif %}"
+                                      value="{{ form.author }}" {% if form.errors contains 'author' %} aria-invalid="true"
+                                      aria-describedby="{{ formId}}-author-error" {% endif %} />
+                                    {% if form.errors contains 'author' %}
+                                    <span id="{{ formId}}-author-error" class="input-error-message">
+                                      <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                                      {% include 'icon-error' %}
+                                      <span>{{ 'blogs.comments.name' | t }} {{ form.errors.messages['author'] }}.</span>
+                                    </span>
+                                    {% endif %}
+                                  </div>
+                                </div>
+
+                                <div class="field comment-field-email">
+                                  <label for="email_field" class="label"><span>{{ 'blogs.comments.email' | t }}:</span></label>
+                                  <div class="control">
+                                    <input type="text" name="comment[email]" id="email_field"
+                                      class="input-text{% if form.errors contains 'email' %} input--error{% endif %}"
+                                      value="{{ form.email }}" autocorrect="off" autocapitalize="off"
+                                      {% if form.errors contains 'email' %} aria-invalid="true"
+                                      aria-describedby="{{ formId}}-email-error" {% endif %} />
+                                    {% if form.errors contains 'email' %}
+                                    <span id="{{ formId}}-email-error" class="input-error-message">
+                                      <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                                      {% include 'icon-error' %}
+                                      <span>{{ form.errors.translated_fields['email'] | capitalize }}
+                                        {{ form.errors.messages['email'] }}.</span>
+                                    </span>
+                                    {% endif %}
+                                  </div>
+                                </div>
+
+                                <div class="field comment-field-text">
+                                  <label for="comment_field" class="label"><span>{{ 'blogs.comments.message' | t }}:</span></label>
+                                  <div class="control">
+                                    <textarea name="comment[body]" id="comment_field" cols="5" rows="3"
+                                      class="{% if form.errors contains 'body' %} input--error{% endif %}"
+                                      {% if form.errors contains 'body' %} aria-invalid="true"
+                                      aria-describedby="{{ formId}}-body-error" {% endif %}>{{ form.body }}</textarea>
+                                    {% if form.errors contains 'body' %}
+                                    <span id="{{ formId}}-body-error" class="input-error-message">
+                                      <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                                      {% include 'icon-error' %}
+                                      <span>{{ 'blogs.comments.message' | t }} {{ form.errors.messages['body'] }}.</span>
+                                    </span>
+                                    {% endif %}
+                                  </div>
+                                </div>
+                              </fieldset>
+
+                              <div class="comment-form-actions">
+                                <div class="primary actions-primary">
+                                  <button type="submit"
+                                    class="action submit primary submit-comment"><span>{{ 'blogs.comments.post' | t }}</span></button>
+                                </div>
+                              </div>
+
+                            {% endform %}
+
+                          </div>
+                        </div>
+
+                      {% endif %}
+
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      {%- comment -%}
+      <div class="col-sm-3 grid-left">
+          <div class="sidebar sidebar-additional">
+              <div class="block block-wishlist">
+                  <div class="block-title">
+                      <strong role="heading" aria-level="2">My Wish List</strong>
+                  </div>
+                  <div class="block-content">
+                      <strong class="subtitle">Last Added Items</strong>
+                      <div class="empty">You have no items in your wish list.</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      {%- endcomment -%}
+
+  </div>
+</section>
+
+
+
+{% comment %} <div class="section-header text-center">
+  <h1 class="article__title">{{ article.title }}</h1>
+  {% if section.settings.blog_show_author %}
+    <span class="article__author">{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+  {% endif %}
+
+  {% if section.settings.blog_show_date %}
+    <span class="article__date">
+      {{ article.published_at | time_tag: format: 'date' }}
+    </span>
+  {% endif %}
+</div>
+
+<div class="rte">
+  {{ article.content }}
+</div>
+
+{% if section.settings.show_share_buttons %}
+  {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+{% endif %} {% endcomment %}
+
+
+
+{% schema %}
+{
+  "name": {
+    "da": "Opslag",
+    "de": "Posts",
+    "en": "Posts",
+    "es": "Publicaciones",
+    "fi": "Julkaisut",
+    "fr": "Articles",
+    "hi": "पोस्ट",
+    "it": "Articoli",
+    "ja": "投稿",
+    "ko": "게시물",
+    "nb": "Innlegg",
+    "nl": "Berichten",
+    "pt-BR": "Posts",
+    "pt-PT": "Publicações",
+    "sv": "Inlägg",
+    "th": "โพสต์",
+    "zh-CN": "文章",
+    "zh-TW": "貼文"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "blog_show_author",
+      "label": {
+        "da": "Vis forfatter",
+        "de": "Autor anzeigen",
+        "en": "Show author",
+        "es": "Mostrar autor",
+        "fi": "Näytä tekijä",
+        "fr": "Afficher l'auteur",
+        "hi": "लेखक दिखाएं",
+        "it": "Mostra autore",
+        "ja": "執筆者を表示する",
+        "ko": "작성자 표시",
+        "nb": "Vis forfatter",
+        "nl": "Auteur weergeven",
+        "pt-BR": "Exibir autor",
+        "pt-PT": "Mostrar autor",
+        "sv": "Visa författare",
+        "th": "แสดงผู้เขียน",
+        "zh-CN": "显示作者",
+        "zh-TW": "顯示作者"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": {
+        "da": "Vis dato",
+        "de": "Datum anzeigen",
+        "en": "Show date",
+        "es": "Mostrar fecha",
+        "fi": "Näytä päivämäärä",
+        "fr": "Afficher la date",
+        "hi": "दिनांक दिखाएं",
+        "it": "Mostra data",
+        "ja": "日付を表示する",
+        "ko": "날짜 표시",
+        "nb": "Vis dato",
+        "nl": "Datum weergeven",
+        "pt-BR": "Exibir data",
+        "pt-PT": "Mostrar data",
+        "sv": "Visa datum",
+        "th": "แสดงวันที่",
+        "zh-CN": "显示日期",
+        "zh-TW": "顯示日期"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": {
+        "da": "Vis knapper til deling på sociale medier",
+        "de": "Buttons für Social Media anzeigen",
+        "en": "Show social sharing buttons",
+        "es": "Mostrar botones para compartir en redes sociales",
+        "fi": "Näytä sosiaalisen median jakamispainikkeet",
+        "fr": "Afficher les boutons de partage sur les médias sociaux",
+        "hi": "सोशल शेयरिंग बटन दिखाएं",
+        "it": "Mostra i pulsanti per la condivisione sui social",
+        "ja": "ソーシャル共有ボタンを表示する",
+        "ko": "소셜 공유 버튼 표시",
+        "nb": "Vis knapper for deling på sosiale medier",
+        "nl": "Knoppen voor sociaal delen weergeven",
+        "pt-BR": "Exibir botões de compartilhamento em redes sociais",
+        "pt-PT": "Mostrar botões de partilha nas redes sociais",
+        "sv": "Visa knappar för delning i sociala medier",
+        "th": "แสดงปุ่มสำหรับแชร์ลงโซเชียล",
+        "zh-CN": "显示社交分享按钮",
+        "zh-TW": "顯示社群分享按鈕"
+      },
+      "default": true
+    }
+  ]
+}
+{% endschema %}

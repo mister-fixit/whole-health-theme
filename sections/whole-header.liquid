@@ -1,0 +1,229 @@
+<header class="page-header" data-section-type="header-section" data-header-section>
+    <div class="rd-navbar rd-navbar-nav-static rd-navbar-static">
+        <div class="layout_1">
+            <div class="panel page-header__panel">
+                <div class="container">
+                    <div class="panel-container-wrap">
+                        {%- if section.settings.top_header_text -%}
+                            <div class="greet welcome">
+                                <span class="text">{{section.settings.top_header_text}}</span>
+                            </div>
+                        {%- endif -%}
+                        <div class="header-switchers">
+                        </div>
+                        <div class="rd-navbar-cart-wrap">
+                            <div data-block="minicart" class="minicart-wrapper">
+                                <div class="rd-navbar-cart-fixed">
+                                    <a class="action showcart rd-navbar-cart-toggle" href="/cart">
+                                        <span class="text">My Cart</span>
+                                        <strong class="counter qty empty">
+                                            <strong class="counter-number">{{cart.item_count}}</strong>
+                                            <strong class="counter-label">
+                                            </strong>
+                                        </strong>
+                                    </a>
+                                </div>
+
+                                <div class="rd-navbar-cart" data-role="dropdownDialog">
+                                    <div class="block block-minicart empty">
+                                        <div id="minicart-content-wrapper">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rd-navbar-collapse-container">
+                            <button class="rd-navbar-collapse-toggle"><span></span>
+                            </button>
+                            <div class="rd-navbar-collapse">
+                                <ul class="header links">
+                                    {%- if customer -%}
+                                        <li><a href="/account/logout" class="create-an-account">Log Out</a></li>
+                                    {%- else -%}
+                                        <li><a href="/account/register" class="create-an-account">Create an Account</a></li>
+                                    {%- endif -%}
+                                    
+                                    {%- if settings.enable_compare -%}
+                                    <li data-compare-btn class="item link compare">
+                                        <a href="/pages/compare-model">Compare</a>
+                                    </li>
+                                    {%- endif -%}
+
+                                    {%- if settings.enable_wishlist -%}
+                                        <li class="wishlist-link">
+                                            <a href="/pages/wishlist"><i class="lnr lnr-heart"></i>My Wishlist</a>
+                                        </li>
+                                    {%- endif -%}
+                                    {%- if customer -%}
+                                        <li class="authorization-link"><a href="/account">Account</a></li>
+                                    {%- else -%}
+                                        <li class="authorization-link"><a href="/account/login">Sign In</a></li>
+                                    {%- endif -%}
+                                    {%- if section.settings.phone_number -%}
+                                        <ul>
+                                            <li class="phone-link">
+                                                <a href="tel:{{section.settings.phone_number}}"><i class="lnr lnr-phone-handset"></i>{{section.settings.phone_number}}</a>
+                                            </li>
+                                        </ul>
+                                    {%- endif -%}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-header__content">
+                <div class="container">
+                    <div class="logo">
+                        {% if section.settings.logo %}
+                            {%- assign img_url = section.settings.logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                            <a href="{{ routes.root_url }}" class="site-header__logo-image">
+                            {% capture logo_alt %}{{ section.settings.logo.alt | default: shop.name }}{% endcapture %}
+                            <img class=""
+                                src="{{ section.settings.logo | img_url: 'master' }}"
+                                alt="{{ logo_alt | escape }}"
+                                style="max-width: {{ section.settings.logo_max_width }}px">
+                            </a>
+                        {% else %}
+                            <a class="site-header__logo-link" href="{{ routes.root_url }}">{{ shop.name }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="rd-navbar-panel-canvas"></div>
+
+                    <nav class="navigation" role="navigation">
+                        <!-- RD Navbar Toggle -->
+                        {% comment %} <button class="rd-navbar-toggle">
+                            <span>
+                                <strong>Categories </strong>
+                            </span>
+                        </button> {% endcomment %}
+                        <button type="button" class="rd-navbar-toggle js-mobile-nav-toggle mobile-nav--open" aria-controls="MobileNav"  aria-expanded="false" aria-label="{{ 'layout.navigation.menu' | t }}">
+                            <span>
+                                <strong>Categories </strong>
+                            </span>
+                        </button>
+                        <!-- END RD Navbar Toggle -->
+                        <div class="rd-navbar-nav-wrap">
+                            <ul class="rd-navbar-nav">
+                                {% for link in linklists[section.settings.main_linklist].links %}
+                                    {% assign child_list_handle = link.title | handleize %}
+                                    {% if menus[child_list_handle].links != blank %}
+                                        <li class="level0 nav-{{ forloop.index }} rd-navbar-submenu-toggle js-toggle-submenu level-top parent rd-navbar--has-dropdown rd-navbar-submenu{% if forloop.first %} first{% endif %}{% if forloop.last %} last{% endif %}{% if link.active %} active{% endif %}">
+                                            <a data-href="{{ link.url }}" href="{{ link.url }}"
+                                                class="level-top {{ link.handle }}"
+                                                role="button" aria-expanded="false"
+                                                name="{{ link.title }}" aria-label="{{ link.title }}">
+                                                <span>{{ link.title }}</span>
+                                            </a>
+                                            <ul class="level0 submenu rd-navbar-dropdown">
+                                                {% for childlink in menus[child_list_handle].links %}
+                                                    <li class="level1 nav-1-{{ forloop.index }} {% if forloop.first %}first{% endif %}">
+                                                        <a class="dropdown-item {% if childlink.active %} active{% endif %} {{ childlink.handle }}"
+                                                            href="{{ childlink.url }}" name="{{ childlink.title }}"
+                                                            title="{{ childlink.title }}"
+                                                            aria-label="{{ childlink.title }}">
+                                                            {{ childlink.title }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% comment %} <span class="rd-navbar-submenu-toggle"></span> {% endcomment %}
+                                        </li>
+                                    {% else %}
+                                        <li class="level0 nav-{{ forloop.index }} level-top{% if forloop.first %} first{% endif %}{% if forloop.last %} last{% endif %}{% if link.active %} active{% endif %}">
+                                            <a class="level-top {{ link.handle }}" href="{{ link.url }}"
+                                                name="{{ link.title }}" aria-label="{{ link.title }}">
+                                                {{ link.title }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </nav>
+
+                    <button class="rd-navbar-search-toggle"><span></span></button>
+                    <div class="block block-search rd-navbar-search">
+                        <div class="block-title"><strong>Search</strong></div>
+                        <div class="block-content form-group">
+                            <form id="search_mini_form" class="searchForm form minisearch rd-navbar-search-form" action="/search" method="get" role="search">
+                                <div class="field search">
+                                    <label class="label" for="search" data-role="minisearch-label">
+                                        <span>Search</span>
+                                    </label>
+                                    <div class="control rd-navbar-search-form-input">
+                                        <input id="search" type="text" name="q" value=""
+                                            placeholder="Search entire store here..." class="input-text" maxlength="128"
+                                            role="combobox" aria-haspopup="false" aria-autocomplete="both"
+                                            autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <button type="submit" title="Search"
+                                        class="action search rd-navbar-search-form-submit">
+                                        <span>Search</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% schema %}
+{
+    "name": "Header",
+    "class": "index-header",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Top Header"
+        },
+        {
+            "type": "text",
+            "id": "top_header_text",
+            "label": "Top Header Text"
+        },
+        {
+            "type": "text",
+            "id": "phone_number",
+            "label": "Phone Number"
+        },
+        {
+            "type": "header",
+            "content": "Logo Images"
+        },
+        {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "logo image"
+        },
+        {
+          "type": "range",
+          "id": "logo_max_width",
+          "label": "Custom Logo width",
+          "min": 50,
+          "max": 300,
+          "step": 5,
+          "unit": "px",
+          "default": 100
+        },
+        {
+            "type": "header",
+            "content": "Menu"
+        },
+        {
+            "type": "link_list",
+            "id": "main_linklist",
+            "label": "Menu",
+            "default": "main-menu"
+        }
+    ]
+}
+{% endschema %}

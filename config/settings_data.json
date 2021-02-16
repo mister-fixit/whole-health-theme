@@ -1,0 +1,827 @@
+{
+  "current": {
+    "color_text": "#3a3a3a",
+    "color_body_text": "#333232",
+    "color_sale_text": "#fa4545",
+    "color_button": "#3a3a3a",
+    "color_button_text": "#ffffff",
+    "color_small_button_text_border": "#3a3a3a",
+    "color_text_field_text": "#000000",
+    "color_text_field_border": "#cccccc",
+    "color_text_field": "rgba(0,0,0,0)",
+    "color_image_overlay_text": "#ffffff",
+    "color_image_overlay": "#685858",
+    "image_overlay_opacity": 40,
+    "color_borders": "#ebebeb",
+    "color_body_bg": "#ffffff",
+    "type_header_font": "helvetica_n7",
+    "type_header_base_size": 26,
+    "type_base_font": "helvetica_n4",
+    "type_base_size": 15,
+    "predictive_search_enabled": true,
+    "predictive_search_show_vendor": false,
+    "predictive_search_show_price": false,
+    "share_image": "",
+    "share_facebook": true,
+    "share_twitter": true,
+    "share_pinterest": true,
+    "social_twitter_link": "http:\/\/twitter.com\/WholeHealthProd\/",
+    "social_facebook_link": "http:\/\/www.facebook.com\/WholeHealthProducts\/",
+    "social_pinterest_link": "http:\/\/www.pinterest.com\/wholehealthprod\/",
+    "social_instagram_link": "",
+    "social_tumblr_link": "",
+    "social_snapchat_link": "",
+    "social_youtube_link": "",
+    "social_vimeo_link": "",
+    "favicon": "shopify:\/\/shop_images\/WH-logo-FAVICON.jpg",
+    "enable_ajax": true,
+    "enable_wishlist": true,
+    "enable_compare": false,
+    "checkout_header_image": "shopify:\/\/shop_images\/wh-amazon-GENERIC-v1a-trusted.jpg",
+    "checkout_logo_image": "shopify:\/\/shop_images\/WholeHealth-logo_e8733e71-8304-44bb-8bfe-57575257faff.png",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#197bbd",
+    "checkout_button_color": "#197bbd",
+    "checkout_error_color": "#e32c2b",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "align_logo": "left",
+          "logo": "",
+          "logo_max_width": 100,
+          "main_linklist": "main-menu",
+          "message": false,
+          "home_page_only": true,
+          "message_text": "Announce something here",
+          "message_link": "",
+          "color_bg": "#3a3a3a",
+          "color_text": "#ffffff"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "link_list",
+            "settings": {
+              "title": "Quick links",
+              "menu": "footer"
+            }
+          },
+          "footer-1": {
+            "type": "newsletter",
+            "settings": {
+              "title": "Newsletter"
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "footer-1"
+        ],
+        "settings": {
+          "show_payment_icons": true,
+          "color_footer_bg": "#f6f6f6",
+          "color_footer_text": "#333232",
+          "show_locale_selector": true,
+          "show_currency_selector": true
+        }
+      },
+      "whole-header": {
+        "type": "whole-header",
+        "settings": {
+          "top_header_text": "FREE DOMESTIC SHIPPING on orders over $75",
+          "phone_number": "866-381-7693",
+          "logo": "shopify:\/\/shop_images\/tr-logo.png",
+          "logo_max_width": 300,
+          "main_linklist": "main-menu"
+        }
+      },
+      "whole-slider": {
+        "type": "whole-slider",
+        "blocks": {
+          "1586509979569": {
+            "type": "image",
+            "settings": {
+              "img_btn_url": "shopify:\/\/collections\/accessories",
+              "image": "shopify:\/\/shop_images\/New_Home_Banner_1.png",
+              "image_mobile": ""
+            }
+          },
+          "1586509995928": {
+            "type": "image",
+            "settings": {
+              "img_btn_url": "shopify:\/\/products\/healthy-heart-support-pack-test-product",
+              "image": "shopify:\/\/shop_images\/New_Home_Banner_1.png",
+              "image_mobile": ""
+            }
+          }
+        },
+        "block_order": [
+          "1586509979569",
+          "1586509995928"
+        ],
+        "settings": {
+          "enabled": true,
+          "is_hidden_on_mobile": false,
+          "nav_arrows": true,
+          "nav_dots": true,
+          "height": "autoheight",
+          "auto_play": 0
+        }
+      },
+      "1585500404123": {
+        "type": "slideshow",
+        "disabled": true,
+        "blocks": {
+          "1585500404123-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/New_Home_Banner_1.png",
+              "alignment": "center center",
+              "slide_title": "",
+              "subheading": "",
+              "button_label": ""
+            }
+          },
+          "1586514523567": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/1586366010fall_outdoors_blog_header.png",
+              "alignment": "center center",
+              "slide_title": "Image slide",
+              "subheading": "Tell your brand's story through images",
+              "button_label": ""
+            }
+          },
+          "1586514533358": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/1586365949Lemon_Ginger_Blog_Header.png",
+              "alignment": "center center",
+              "slide_title": "Image slide",
+              "subheading": "Tell your brand's story through images",
+              "button_label": ""
+            }
+          }
+        },
+        "block_order": [
+          "1585500404123-0",
+          "1586514523567",
+          "1586514533358"
+        ],
+        "settings": {
+          "slideshow_height": "small",
+          "text_size": "medium",
+          "text_alignment": "center center",
+          "show_overlay": false,
+          "autorotate": false,
+          "autorotate_speed": 5
+        }
+      },
+      "1585504105240": {
+        "type": "whole-widget-blocks",
+        "blocks": {
+          "1599241150189": {
+            "type": "image-content",
+            "settings": {
+              "block_image": "shopify:\/\/shop_images\/wh-amazon-GENERIC-v1a-trusted-and-money-back.jpg",
+              "block_title": "",
+              "block_desc": "",
+              "block_button_text": "Shop Now",
+              "block_button_url": "shopify:\/\/collections\/whole-health-products",
+              "title_color": "",
+              "desc_color": "",
+              "show_button": true,
+              "button_text_color": "",
+              "button_bg_color": "",
+              "button_border_color": ""
+            }
+          },
+          "1585504105240-0": {
+            "type": "image-content",
+            "settings": {
+              "block_image": "shopify:\/\/shop_images\/1586366082thanksgiving_tips_blog_header_2.png",
+              "block_title": "15 Ways Not to Gain Weight This Thanksgiving",
+              "block_desc": "",
+              "block_button_text": "Read Article",
+              "block_button_url": "shopify:\/\/blogs\/blog\/thanksgiving-weight-loss-tips",
+              "title_color": "#ffffff",
+              "desc_color": "#ffffff",
+              "show_button": true,
+              "button_text_color": "#ffffff",
+              "button_bg_color": "rgba(0,0,0,0)",
+              "button_border_color": "rgba(0,0,0,0)"
+            }
+          }
+        },
+        "block_order": [
+          "1599241150189",
+          "1585504105240-0"
+        ],
+        "settings": {}
+      },
+      "1585506363515": {
+        "type": "whole-widget-brands",
+        "blocks": {
+          "1585506363515-0": {
+            "type": "widget-brand",
+            "settings": {
+              "brand_img": "shopify:\/\/shop_images\/Whole_Health_Logo_1.png",
+              "brand_url": "shopify:\/\/collections\/whole-health-products"
+            }
+          },
+          "1585506423326": {
+            "type": "widget-brand",
+            "settings": {
+              "brand_img": "shopify:\/\/shop_images\/NOW_Foods_Logo_1.png",
+              "brand_url": "shopify:\/\/collections\/now-supplements"
+            }
+          },
+          "1585506466594": {
+            "type": "widget-brand",
+            "settings": {
+              "brand_img": "shopify:\/\/shop_images\/NOW_Essential_Oils_Logo.png",
+              "brand_url": "shopify:\/\/collections\/now-essential-oils"
+            }
+          },
+          "1585506533589": {
+            "type": "widget-brand",
+            "settings": {
+              "brand_img": "shopify:\/\/shop_images\/Arches_Logo_1.png"
+            }
+          }
+        },
+        "block_order": [
+          "1585506363515-0",
+          "1585506423326",
+          "1585506466594",
+          "1585506533589"
+        ],
+        "settings": {}
+      },
+      "product-template": {
+        "type": "product-template",
+        "settings": {
+          "show_quantity_selector": true,
+          "show_variant_labels": true,
+          "show_vendor": true,
+          "enable_payment_button": false,
+          "show_share_buttons": true,
+          "media_size": "medium",
+          "enable_image_zoom": true,
+          "enable_video_looping": false
+        }
+      },
+      "product-recommendations": {
+        "type": "product-recommendations",
+        "settings": {
+          "show_product_recommendations": true,
+          "heading": "You may also like",
+          "show_vendor": false
+        }
+      },
+      "whole-footer": {
+        "type": "whole-footer",
+        "settings": {
+          "show_newsletter": true,
+          "newsletter_heading": "Get the Latest News Delivered Daily.",
+          "newsletter_subtext": "Give us your email and you will be daily updated with the latest events, in detail.",
+          "footer_logo": "shopify:\/\/shop_images\/tr-logo_339e6b28-1ea0-4720-b0ab-692f3f7c2097.png",
+          "logo_max_width": 300,
+          "about_us_text": "<p>At Whole Health, we believe that you shouldn’t have to choose between a good bargain and a good product. We are committed to providing the highest quality vitamins and supplements at unmatched values. This is how we became <em>The Trusted Name in Natural Health Products Since 1997<\/em>. <a href=\"https:\/\/whole-health-products.myshopify.com\/pages\/the-whole-health-way\" aria-label=\"Whole health way\">Read more<\/a><\/p>",
+          "show_payment_icons": true,
+          "payment_icon_visa": true,
+          "payment_icon_mastercard": true,
+          "payment_icon_paypal": true,
+          "payment_icon_discover": true,
+          "payment_icon_amex": true,
+          "column_2_heading": "Your Account",
+          "coulmn_2_menu": "your-account",
+          "column_3_heading": "WholeHealth Way",
+          "coulmn_3_menu": "wholehealth-way",
+          "column_4_heading": "Helpful Links",
+          "coulmn_4_menu": "helpful-links",
+          "coulmn_content": "*This website and these statements have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure, or prevent any disease. Please consult a properly trained medical practitioner for medical advice. Results may vary based on individual user and are not guaranteed.",
+          "column_5_heading": "Contacts",
+          "coulmn_5_content": "<p>Address: PO Box 2773 Santa Rosa, CA  95405<\/p>\n                            <p>Phones: 1-866-381-7693 (Toll-Free); <\/p>\n<p>E-mail: <ahref>service@wholehealth.com<\/ahref><\/p>\n                            <p>Hours: Mon-Fri 9:00am-5:00pm Pacific Time<\/p>",
+          "show_social_links": true,
+          "social_icon_facebook": true,
+          "social_icon_twitter": true,
+          "social_icon_pinterest": true,
+          "show_copyright": true,
+          "copyright_text": "© 1997-2020 Whole Health. All Rights Reserved."
+        }
+      },
+      "1586432966621": {
+        "type": "featured-blog",
+        "settings": {
+          "title": "The Living Blog",
+          "blog": "health",
+          "post_limit": 3,
+          "blog_show_date": false
+        }
+      },
+      "1586685629664": {
+        "type": "whole-slider",
+        "blocks": {
+          "1586685680241": {
+            "type": "image",
+            "settings": {
+              "img_btn_url": "https:\/\/mailchi.mp\/wholehealth\/winter2020-supersale",
+              "image": "shopify:\/\/shop_images\/wholehealth-banner-20201231-v1a-web.jpg",
+              "image_mobile": "shopify:\/\/shop_images\/wholehealth-banner-20201231-v1a-web.jpg"
+            }
+          },
+          "1600100093587": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/New_Home_Banner_1_eeae18be-0edc-4d5d-94c5-ca73903c1835.png",
+              "image_mobile": "shopify:\/\/shop_images\/wh-amazon-GENERIC-v1a-trusted-and-money-back.jpg"
+            }
+          }
+        },
+        "block_order": [
+          "1586685680241",
+          "1600100093587"
+        ],
+        "settings": {
+          "enabled": true,
+          "is_hidden_on_mobile": false,
+          "nav_arrows": false,
+          "nav_dots": false,
+          "height": "autoheight",
+          "auto_play": 0
+        }
+      },
+      "template-monthly-drawing-rules": {
+        "type": "template-monthly-drawing-rules",
+        "settings": {
+          "page_title": "Contest Rules"
+        }
+      },
+      "template-auto-delivery-plan": {
+        "type": "template-auto-delivery-plan",
+        "settings": {
+          "page_title": "What is the Auto Delivery Plan?"
+        }
+      },
+      "template-free-newsletter": {
+        "type": "template-free-newsletter",
+        "settings": {
+          "page_title": "Whole Health's Free Newsletter & Offers"
+        }
+      },
+      "template-product-returns": {
+        "type": "template-product-returns",
+        "settings": {
+          "page_title": "Product Returns"
+        }
+      },
+      "template-privacy-policy": {
+        "type": "template-privacy-policy",
+        "settings": {
+          "page_title": "Our Privacy Policy"
+        }
+      },
+      "template-shipping": {
+        "type": "template-shipping",
+        "settings": {
+          "page_title": "Shipping"
+        }
+      },
+      "template-the-whole-health-way": {
+        "type": "template-the-whole-health-way",
+        "settings": {
+          "page_title": "Whole Health Way"
+        }
+      },
+      "collection-template-whole": {
+        "type": "collection-template-whole",
+        "settings": {
+          "pagination_number": "9,15,30"
+        }
+      },
+      "blog-whole-template": {
+        "type": "blog-whole-template",
+        "settings": {
+          "blog_show_date": true
+        }
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "settings": {
+          "cart_ajax_enable": true,
+          "cart_notes_enable": false
+        }
+      },
+      "article-template": {
+        "type": "article-template",
+        "settings": {
+          "blog_show_author": true,
+          "blog_show_date": true,
+          "show_share_buttons": true
+        }
+      }
+    },
+    "content_for_index": [
+      "1585500404123",
+      "1586685629664",
+      "1585504105240",
+      "1585506363515",
+      "1586432966621"
+    ]
+  },
+  "presets": {
+    "Default": {
+      "sections": {
+        "header": {
+          "type": "header",
+          "settings": {}
+        },
+        "hero-1": {
+          "type": "hero",
+          "settings": {
+            "hero_size": "large",
+            "text_size": "large"
+          }
+        },
+        "feature-row": {
+          "type": "feature-row",
+          "settings": {}
+        },
+        "feature-columns": {
+          "type": "feature-columns",
+          "blocks": {
+            "feature-columns-0": {
+              "type": "text_block",
+              "settings": {}
+            },
+            "feature-columns-1": {
+              "type": "text_block",
+              "settings": {}
+            },
+            "feature-columns-2": {
+              "type": "text_block",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "feature-columns-0",
+            "feature-columns-1",
+            "feature-columns-2"
+          ],
+          "settings": {
+            "title": ""
+          }
+        },
+        "collection": {
+          "type": "collection",
+          "settings": {
+            "grid": 4
+          }
+        },
+        "hero-2": {
+          "type": "hero",
+          "settings": {
+            "text_size": "large"
+          }
+        },
+        "quotes": {
+          "type": "quotes",
+          "blocks": {
+            "quotes-0": {
+              "type": "quote",
+              "settings": {}
+            },
+            "quotes-1": {
+              "type": "quote",
+              "settings": {}
+            },
+            "quotes-2": {
+              "type": "quote",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "quotes-0",
+            "quotes-1",
+            "quotes-2"
+          ],
+          "settings": {
+            "title": ""
+          }
+        },
+        "image-bar": {
+          "type": "image-bar",
+          "blocks": {
+            "image-bar-0": {
+              "type": "image",
+              "settings": {}
+            },
+            "image-bar-1": {
+              "type": "image",
+              "settings": {}
+            },
+            "image-bar-2": {
+              "type": "image",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "image-bar-0",
+            "image-bar-1",
+            "image-bar-2"
+          ],
+          "settings": {}
+        },
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "footer-0": {
+              "type": "link_list",
+              "settings": {}
+            },
+            "footer-1": {
+              "type": "newsletter",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "footer-0",
+            "footer-1"
+          ],
+          "settings": {
+            "show_payment_icons": true
+          }
+        }
+      },
+      "content_for_index": [
+        "hero-1",
+        "feature-row",
+        "feature-columns",
+        "collection",
+        "hero-2",
+        "quotes",
+        "image-bar"
+      ]
+    },
+    "Light": {
+      "color_text": "#162950",
+      "color_body_text": "#6d6d6d",
+      "color_sale_text": "#DA2F0C",
+      "color_borders": "#e4e4e4",
+      "color_button": "#DA2F0C",
+      "color_button_text": "#ffffff",
+      "color_small_button_text_border": "#162950",
+      "color_text_field": "#ffffff",
+      "color_text_field_text": "#162950",
+      "color_text_field_border": "#909090",
+      "color_image_overlay_text": "#ffffff",
+      "color_image_overlay": "#3d3d3d",
+      "image_overlay_opacity": 40,
+      "color_body_bg": "#f8f8f8",
+      "type_header_font": "muli_n6",
+      "type_header_base_size": 26,
+      "type_base_font": "muli_n4",
+      "type_base_size": 18,
+      "share_facebook": true,
+      "share_twitter": true,
+      "share_pinterest": true,
+      "social_twitter_link": "",
+      "social_facebook_link": "",
+      "social_pinterest_link": "",
+      "social_instagram_link": "",
+      "social_tumblr_link": "",
+      "social_snapchat_link": "",
+      "social_youtube_link": "",
+      "social_vimeo_link": "",
+      "favicon": "",
+      "checkout_header_image": "",
+      "checkout_logo_image": "",
+      "checkout_logo_position": "left",
+      "checkout_logo_size": "small",
+      "checkout_body_background_image": "",
+      "checkout_body_background_color": "#ffffff",
+      "checkout_input_background_color_mode": "white",
+      "checkout_sidebar_background_image": "",
+      "checkout_sidebar_background_color": "#e8f3f6",
+      "checkout_heading_font": "Roboto",
+      "checkout_body_font": "Source Sans Pro",
+      "checkout_accent_color": "#1990c6",
+      "checkout_button_color": "#23314e",
+      "checkout_error_color": "#ff6d6d",
+      "sections": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "align_logo": "left",
+            "logo": "",
+            "logo_max_width": 135,
+            "main_linklist": "main-menu",
+            "message": true,
+            "color_bg": "#162950",
+            "color_text": "#ffffff"
+          }
+        },
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "alignment": "center",
+            "hero_size": "x-large",
+            "text_size": "large"
+          }
+        },
+        "slideshow": {
+          "type": "slideshow",
+          "blocks": {
+            "slideshow-0": {
+              "type": "image",
+              "settings": {
+                "image": "",
+                "alignment": "center center"
+              }
+            },
+            "1492095993817": {
+              "type": "image",
+              "settings": {
+                "image": "",
+                "alignment": "center"
+              }
+            }
+          },
+          "block_order": [
+            "slideshow-0",
+            "1492095993817"
+          ],
+          "settings": {
+            "slideshow_height": "medium",
+            "text_size": "medium",
+            "autorotate": false,
+            "autorotate_speed": 5
+          }
+        },
+        "featured-collections": {
+          "type": "collection",
+          "settings": {
+            "grid": 3,
+            "rows": 1,
+            "show_vendor": true,
+            "show_view_all": true
+          }
+        },
+        "product-template": {
+          "type": "product-template",
+          "settings": {
+            "show_quantity_selector": false,
+            "show_variant_labels": true,
+            "show_vendor": false,
+            "show_share_buttons": true,
+            "media_size": "medium",
+            "enable_image_zoom": true,
+            "enable_video_looping": false
+          }
+        },
+        "collection-template": {
+          "type": "collection-template",
+          "settings": {
+            "layout": "grid",
+            "grid": 2,
+            "rows": 2,
+            "show_collection_image": true,
+            "show_vendor": false,
+            "sort_enable": true,
+            "tags_enable": true
+          }
+        },
+        "1492033809691": {
+          "type": "map",
+          "settings": {}
+        },
+        "1492033877875": {
+          "type": "quotes",
+          "blocks": {
+            "1492033877875-0": {
+              "type": "quote",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "1492033877875-0"
+          ],
+          "settings": {}
+        },
+        "1492033924902": {
+          "type": "custom-content",
+          "blocks": {
+            "1492033924902-0": {
+              "type": "text",
+              "settings": {
+                "width": "100%",
+                "alignment": "center",
+                "align_text": "center"
+              }
+            }
+          },
+          "block_order": [
+            "1492033924902-0"
+          ],
+          "settings": {
+            "title": ""
+          }
+        },
+        "1492096252560": {
+          "type": "collection-list",
+          "blocks": {
+            "1492096252560-0": {
+              "type": "featured_collection",
+              "settings": {}
+            },
+            "1492096252560-1": {
+              "type": "featured_collection",
+              "settings": {}
+            },
+            "1492096252560-2": {
+              "type": "featured_collection",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "1492096252560-0",
+            "1492096252560-1",
+            "1492096252560-2"
+          ],
+          "settings": {
+            "grid": 3
+          }
+        },
+        "blog-template": {
+          "type": "blog-template",
+          "settings": {
+            "layout": "grid",
+            "blog_show_author": true,
+            "blog_show_date": false
+          }
+        },
+        "article-template": {
+          "type": "article-template",
+          "settings": {
+            "blog_show_author": true,
+            "blog_show_date": true,
+            "show_share_buttons": true
+          }
+        },
+        "cart-template": {
+          "type": "cart-template",
+          "settings": {
+            "cart_notes_enable": false
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "link_list": {
+              "type": "link_list",
+              "settings": {}
+            },
+            "text": {
+              "type": "text",
+              "settings": {}
+            },
+            "newsletter": {
+              "type": "newsletter",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "link_list",
+            "text",
+            "newsletter"
+          ],
+          "settings": {
+            "color_footer_bg": "#f8f8f8",
+            "color_footer_text": "#6d6d6d"
+          }
+        }
+      },
+      "content_for_index": [
+        "hero",
+        "featured-collections",
+        "slideshow",
+        "1492033924902",
+        "1492096252560",
+        "1492033877875",
+        "1492033809691"
+      ]
+    }
+  }
+}

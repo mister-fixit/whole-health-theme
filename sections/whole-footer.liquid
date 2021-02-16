@@ -1,0 +1,411 @@
+<footer class="page-footer layout_3">
+    {%- if template == 'index' -%}
+        {%- if section.settings.show_newsletter -%}
+            <div class="block-newsletter">
+                <div class="container">
+                    <div class="row">
+                        <div class="title">
+                            {%- if section.settings.newsletter_heading -%}
+                            <strong>{{section.settings.newsletter_heading}}</strong>
+                            {%- endif -%}
+                            {%- if section.settings.newsletter_subtext -%}
+                            <span class="slog-newsletter">{{section.settings.newsletter_subtext}}</span>
+                            {%- endif -%}
+                        </div>
+                        <div class="content">
+                            {%- assign formId = 'ContactFooter' -%}
+                            {% form 'customer', id: formId, class: 'form subscribe', novalidate: 'novalidate' %}
+                                {%- if form.posted_successfully? -%}
+                                    <p class="form-message form-message--success" tabindex="-1" data-form-status>
+                                    {{ 'general.newsletter_form.confirmation' | t }}
+                                    </p>
+                                {%- endif -%}
+                                <input type="hidden" name="contact[tags]" value="newsletter">
+                                <div class="field newsletter {% if form.errors %} input-group--error{% endif %}">
+                                    <div class="control">
+                                        <input type="email" name="contact[email]" id="newsletter"
+                                        class="input-group__field newsletter__input{% if form.errors %} input--error{% endif %}"
+                                        value="{{ form.email }}" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
+                                        aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}" aria-required="true"
+                                        required autocorrect="off" autocapitalize="off" {% if form.errors %} aria-invalid="true"
+                                        aria-describedby="{{ formId }}-email-error" data-form-status {% endif %}>
+                                    </div>
+                                    <button class="action subscribe primary" title="Subscribe" type="submit">
+                                        <span>{{ 'general.newsletter_form.submit' | t }}</span>
+                                    </button>
+                                </div>
+
+                                {% if form.errors contains 'email' %}
+                                    <span id="{{ formId }}-email-error" class="input-error-message">
+                                    <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                                    {% include 'icon-error' %}
+                                    <span class="site-footer__newsletter-error">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                                    </span>
+                                {% endif %}
+                            {% endform %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+    {%- endif -%}
+    <div class="container content footer">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3 first-extra">
+                <div class="footer-block-1 footer-col">
+                    <h4 class="hidden-title footer_column_heading">About</h4>
+                    <div class="footer-col-content">
+                        <div class="footer-logo">
+                            <div class="logoAfter"></div>
+                            <strong class="logo">
+                                <a href="{{ routes.root_url }}" class="site-footer__logo-image">
+                                    {%- if section.settings.footer_logo -%}
+                                        {%- assign img_url = section.settings.footer_logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                        <img class="lazyload js"
+                                            src="{{ section.settings.footer_logo | img_url: '300x300' }}"
+                                            data-src="{{ img_url }}"
+                                            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                            data-aspectratio="{{ section.settings.footer_logo.aspect_ratio }}"
+                                            data-sizes="auto"
+                                            alt="WholeHealth"
+                                            style="max-width: {{ section.settings.logo_max_width }}px">
+                                        <noscript>
+                                            {% capture image_size %}{{ section.settings.logo_max_width | escape }}x{% endcapture %}
+                                            <img src="{{ section.settings.footer_logo | img_url: image_size }}"
+                                                srcset="{{ section.settings.footer_logo | img_url: image_size }} 1x, {{ section.settings.footer_logo | img_url: image_size, scale: 2 }} 2x"
+                                                alt="{{ section.settings.footer_logo.alt | default: shop.name }}"
+                                                style="max-width: {{ section.settings.logo_max_width }}px;">
+                                        </noscript>
+                                    {%- endif -%}
+                                </a>
+                            </strong>
+                        </div>
+                        {%- if section.settings.about_us_text != blank -%}
+                        <div class="desc-footer">{{ section.settings.about_us_text }}</div>
+                        {%- endif -%}
+                        {% if section.settings.show_payment_icons %}
+                            <ul class="list-footer">
+                                {% if section.settings.payment_icon_visa %}<li><a href="#" target="_blank"><i class="fa fa-cc-visa"></i></a></li>{% endif %}
+                                {% if section.settings.payment_icon_mastercard %}<li><a href="#" target="_blank"><i class="fa fa-cc-mastercard"></i></a></li>{% endif %}
+                                {% if section.settings.payment_icon_paypal %}<li><a href="#" target="_blank"><i class="fa fa-cc-paypal"></i></a></li>{% endif %}
+                                {% if section.settings.payment_icon_discover %}<li><a href="#" target="_blank"><i class="fa fa-cc-discover"></i></a></li>{% endif %}
+                                {% if section.settings.payment_icon_amex %}<li><a href="#" target="_blank"><i class="fa fa-cc-amex"></i></a></li>{% endif %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-lg-4">
+                            <div class="footer-col">
+                                {%- if section.settings.column_2_heading != blank -%}
+                                    <h4 class="footer_column_heading">{{section.settings.column_2_heading}}</h4>
+                                {%- endif -%}
+                                {% if linklists[section.settings.coulmn_2_menu].links.size > 0 %}
+                                    <div class="footer-col-content">
+                                        <ul>
+                                            {% for link in linklists[section.settings.coulmn_2_menu].links %}
+                                                <li><a href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">{{ link.title }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-lg-4">
+                            <div class="footer-col">
+                                {%- if section.settings.column_3_heading != blank -%}
+                                    <h4 class="footer_column_heading">{{section.settings.column_3_heading}}</h4>
+                                {%- endif -%}
+                                {% if linklists[section.settings.coulmn_3_menu].links.size > 0 %}
+                                    <div class="footer-col-content">
+                                        <ul>
+                                            {% for link in linklists[section.settings.coulmn_3_menu].links %}
+                                                <li><a href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">{{ link.title }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-lg-4">
+                            <div class="footer-col">
+                                {%- if section.settings.column_4_heading != blank -%}
+                                    <h4 class="footer_column_heading">{{section.settings.column_4_heading}}</h4>
+                                {%- endif -%}
+                                {% if linklists[section.settings.coulmn_4_menu].links.size > 0 %}
+                                    <div class="footer-col-content">
+                                        <ul>
+                                            {% for link in linklists[section.settings.coulmn_4_menu].links %}
+                                                <li><a href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">{{ link.title }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {%- if section.settings.coulmn_content != blank -%}
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="footer-col">
+                                    <div class="footer-col-content">
+                                        <div class="desc-footer">{{section.settings.coulmn_content}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 last-extra">
+                <div class="footer-info footer-col">
+                    {%- if section.settings.column_5_heading != blank -%}
+                        <h4 class="footer_column_heading">{{section.settings.column_5_heading}}</h4>
+                    {%- endif -%}
+                    <div class="footer-col-content">
+                        {%- if section.settings.coulmn_5_content != blank -%}
+                            <div class="list-contacts-footer">{{section.settings.coulmn_5_content}}</div>
+                        {%- endif -%}
+                        {%- if section.settings.show_social_links -%}
+                            <ul class="list-icon">
+                                {% if section.settings.social_icon_facebook %}
+                                    <li>
+                                        <a href="{{ settings.social_facebook_link }}" target="_blank" name="Facebook" title="Facebook" rel="nofollow" aria-label="Facebook">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if section.settings.social_icon_twitter %}
+                                    <li>
+                                        <a href="{{ settings.social_twitter_link }}" target="_blank" name="Twitter" title="Twitter" rel="nofollow" aria-label="Twitter">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if section.settings.social_icon_pinterest %}
+                                    <li>
+                                        <a href="{{ settings.social_pinterest_link }}" target="_blank" name="Pinterest" title="Pinterest" rel="nofollow" aria-label="Pinterest">
+                                            <i class="fa fa-pinterest"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        {%- endif -%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%- if section.settings.show_copyright -%}
+            <small class="copyright">
+                <span>{{section.settings.copyright_text}}</span>
+            </small>
+        {%- endif -%}
+    </div>
+</footer>
+
+{% schema %}
+{
+    "name": "Whole Health Footer",
+    "class": "whole-health-footer",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Newsletter Content"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_newsletter",
+            "label": "Show Newsletter?",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "newsletter_heading",
+            "label": "Newsletter Heading"
+        },
+        {
+            "type": "text",
+            "id": "newsletter_subtext",
+            "label": "Newsletter Subtext"
+        },
+        {
+            "type": "header",
+            "content": "Footer Logo Section"
+        },
+        {
+            "type": "image_picker",
+            "id": "footer_logo",
+            "label": "Footer Logo"
+        },
+        {
+          "type": "range",
+          "id": "logo_max_width",
+          "label": "Custom Logo width",
+          "min": 50,
+          "max": 300,
+          "step": 5,
+          "unit": "px",
+          "default": 100
+        },
+        {
+            "type": "textarea",
+            "id": "about_us_text",
+            "label": "About US text"
+        },
+        {
+            "type": "header",
+            "content": "Payment Icons"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_payment_icons",
+            "label": "Show Payment Icons?",
+            "default": true
+        },
+        {
+            "type": "paragraph",
+            "content": "Select Payment Methods"
+        },
+        {
+            "type": "checkbox",
+            "id": "payment_icon_visa",
+            "label": "Visa",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "payment_icon_mastercard",
+            "label": "Mastercard",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "payment_icon_paypal",
+            "label": "Paypal",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "payment_icon_discover",
+            "label": "Discover",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "payment_icon_amex",
+            "label": "Amex",
+            "default": true
+        },
+        {
+          "type": "header",
+          "content": "Column 2"
+        },
+        {
+          "type": "text",
+          "id": "column_2_heading",
+          "label": "Heading Text"
+        },
+        {
+          "type": "link_list",
+          "id": "coulmn_2_menu",
+          "label": "Select Menu",
+          "default": "footer"
+        },
+        {
+          "type": "header",
+          "content": "Column 3"
+        },
+        {
+          "type": "text",
+          "id": "column_3_heading",
+          "label": "Heading Text"
+        },
+        {
+          "type": "link_list",
+          "id": "coulmn_3_menu",
+          "label": "Select Menu",
+          "default": "footer"
+        },
+        {
+          "type": "header",
+          "content": "Column 4"
+        },
+        {
+          "type": "text",
+          "id": "column_4_heading",
+          "label": "Heading Text"
+        },
+        {
+          "type": "link_list",
+          "id": "coulmn_4_menu",
+          "label": "Select Menu",
+          "default": "footer"
+        },
+        {
+          "type": "textarea",
+          "id": "coulmn_content",
+          "label": "Footer Description"
+        },
+        {
+          "type": "header",
+          "content": "Column 5"
+        },
+        {
+          "type": "text",
+          "id": "column_5_heading",
+          "label": "Heading Text"
+        },
+        {
+          "type": "textarea",
+          "id": "coulmn_5_content",
+          "label": "Add Contact number, Email ID, Store Address etc."
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_links",
+            "label": "Show Social Links?",
+            "default": true
+        },
+        {
+            "type": "paragraph",
+            "content": "Select Networks"
+        },
+        {
+            "type": "checkbox",
+            "id": "social_icon_facebook",
+            "label": "Facebook",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "social_icon_twitter",
+            "label": "Twitter",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "social_icon_pinterest",
+            "label": "Pinterest",
+            "default": true
+        },
+        {
+          "type": "header",
+          "content": "Copyright Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_copyright",
+          "label": "Show Copyright Text?",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "copyright_text",
+          "label": "Copyright Text"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+<div class="page-title-wrapper">
+    <h1 class="page-title text-left">
+        {%- if section.settings.page_title != blank -%}
+            <span class="base">{{ section.settings.page_title }}</span>
+        {%- else -%}
+            <span class="base">{{ page.title }}</span>
+        {%- endif -%}
+    </h1>
+</div>
+
+<div class="columns">
+    <div class="column main rte">
+        {{ page.content }}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Shipping",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Page Title"
+        },
+        {
+            "type": "text",
+            "id": "page_title",
+            "label": "Page Title"
+        }
+    ]
+}
+{% endschema %}

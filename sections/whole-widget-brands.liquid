@@ -1,0 +1,61 @@
+<section data-section-id="{{ section.id }}" class="index-brands">
+    {% comment %} <div class="container"> {% endcomment %}
+        <div class="block widget brands ">
+            <div class="block-content">
+                <ul class="brandlist">
+                    {%- for block in section.blocks -%}
+                        {%- if block.type == 'widget-brand' -%}                
+                            <li style="flex-basis: 20%; width: 20%;">
+                                <div class="inner">
+                                    <a class="brand-logo" href="{{block.settings.brand_url}}">
+                                        {%- if block.settings.brand_img != blank -%}
+                                            <img src="{{ block.settings.brand_img | img_url: 'original' }}" alt="{{ block.settings.brand_img.alt }}">
+                                        {%- else -%}
+                                            <img src="https://cdn.shopify.com/s/files/1/0371/8086/6605/files/tr-logo.png?v=1585496243" alt="Whole Health">
+                                        {%- endif -%}
+                                    </a>
+                                </div>
+                            </li>            
+                        {%- endif -%}
+                    {%- endfor -%}
+                </ul>
+            </div>
+        </div>
+    {% comment %} </div> {% endcomment %}
+</section>
+
+{% schema %}
+{
+    "name": "Widget Brands",
+    "class": "index-widget-brand",
+    "blocks": [
+        {
+            "type": "widget-brand",
+            "name": "Widget Content",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "brand_img",
+                    "label": "Brand Image"
+                },
+                {
+                    "type": "url",
+                    "id": "brand_url",
+                    "label": "Brand URL"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "category": "brands",
+            "name":"Index Widget Brands",
+            "blocks": [
+                {
+                    "type": "widget-brand"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
