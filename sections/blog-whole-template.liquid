@@ -1,6 +1,6 @@
-{%- assign paginationAmount = 3 -%}
+{%- assign paginationAmount = 9 -%}
 {%- if cart.attributes.pagination != blank -%}
-    {%- assign paginationAmount = cart.attributes.pagination | default:3 | abs -%}
+    {%- assign paginationAmount = cart.attributes.pagination | default:9 | abs -%}
 
 {%- endif -%}
 
